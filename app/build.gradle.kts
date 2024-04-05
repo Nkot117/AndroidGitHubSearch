@@ -60,5 +60,11 @@ dependencies {
     // moshi
     implementation("com.squareup.moshi:moshi:1.12.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    
+    // Room
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:${roomVersion}")
+    annotationProcessor("androidx.room:room-compiler:${roomVersion}")
+    kapt("androidx.room:room-compiler:${roomVersion}")
 
 }
