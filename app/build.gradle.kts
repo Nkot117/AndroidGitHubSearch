@@ -8,14 +8,14 @@ plugins {
 android {
     namespace = "com.example.androidgithubsearch"
     compileSdk = 34
-
+    
     defaultConfig {
         applicationId = "com.example.androidgithubsearch"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -26,7 +26,7 @@ android {
             }
         }
     }
-
+    
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-
+    
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -54,17 +54,17 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
+    
     // Hilt
     val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:${hiltVersion}")
     kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
-
+    
     // Retrofit
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation("com.squareup.retrofit2:converter-moshi:${retrofitVersion}")
-
+    
     // moshi
     implementation("com.squareup.moshi:moshi:1.12.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
@@ -75,5 +75,5 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:${roomVersion}")
     kapt("androidx.room:room-compiler:${roomVersion}")
     implementation("androidx.room:room-ktx:$roomVersion")
-
+    
 }
