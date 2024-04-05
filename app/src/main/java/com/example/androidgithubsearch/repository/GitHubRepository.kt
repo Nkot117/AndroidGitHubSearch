@@ -1,8 +1,8 @@
 package com.example.androidgithubsearch.repository
 
 import com.example.androidgithubsearch.api.GitHubApiService
-import com.example.androidgithubsearch.model.GitHubSearchRepositoryResponse
-import com.example.androidgithubsearch.model.GitHubUserRepositoryResponse
+import com.example.androidgithubsearch.model.api.GitHubSearchRepositoryResponse
+import com.example.androidgithubsearch.model.api.GitHubUserRepositoryResponse
 import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(private val apiService: GitHubApiService) {

@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.model
+package com.example.androidgithubsearch.model.api
 
 data class GitHubUserRepositoryResponse(
     val id: Int,

@@ -1,7 +1,7 @@
 package com.example.androidgithubsearch.api
 
-import com.example.androidgithubsearch.model.GitHubSearchRepositoryResponse
-import com.example.androidgithubsearch.model.GitHubUserRepositoryResponse
+import com.example.androidgithubsearch.model.api.GitHubSearchRepositoryResponse
+import com.example.androidgithubsearch.model.api.GitHubUserRepositoryResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

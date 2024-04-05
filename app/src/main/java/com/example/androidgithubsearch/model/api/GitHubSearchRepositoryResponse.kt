@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.model
+package com.example.androidgithubsearch.model.api
 
 import com.squareup.moshi.Json
 
