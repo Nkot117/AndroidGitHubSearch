@@ -38,4 +38,8 @@ object HiltModule {
     fun provideDatabase(
         @ApplicationContext context: Context
     ) = Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
+    
+    @Provides
+    @Singleton
+    fun provideUserRepositoryDao(database: AppDatabase) = database.userRepositoryDao()
 }
