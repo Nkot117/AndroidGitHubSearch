@@ -42,4 +42,8 @@ object HiltModule {
     @Provides
     @Singleton
     fun provideUserRepositoryDao(database: AppDatabase) = database.userRepositoryDao()
+    
+    @Provides
+    @Singleton
+    fun provideFavoriteRepositoryDao(database: AppDatabase) = database.favoriteRepositoryDao()
 }

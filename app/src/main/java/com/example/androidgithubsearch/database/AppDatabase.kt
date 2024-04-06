@@ -1,31 +1,14 @@
 package com.example.androidgithubsearch.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.androidgithubsearch.dao.FavoriteRepositoryDao
 import com.example.androidgithubsearch.dao.UserRepositoryDao
+import com.example.androidgithubsearch.model.db.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.model.db.UserRepositoryEntity
 
-@Database(entities = [UserRepositoryEntity::class], version = 1)
+@Database(entities = [UserRepositoryEntity::class, FavoriteRepositoryEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userRepositoryDao(): UserRepositoryDao
-    
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-        
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context,
-                    AppDatabase::class.java,
-                    "app_database"
-                ).build()
-                
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
+    abstract fun favoriteRepositoryDao(): FavoriteRepositoryDao
 }
