@@ -10,6 +10,7 @@ class GitHubRepository @Inject constructor(private val apiService: GitHubApiServ
     private val userRepositoryDao: UserRepository
 ){
     suspend fun fetchAndSaveUserRepositories(username: String) {
+        deleteAllUserRepositories()
         val response = apiService.getUserRepositories(username)
         response.map { it.toUserRepositoryEntity() }.forEach {
              userRepositoryDao.insert(it)
@@ -18,5 +19,9 @@ class GitHubRepository @Inject constructor(private val apiService: GitHubApiServ
 
     suspend fun searchRepositories(query: String): GitHubSearchRepositoryResponse {
         return apiService.searchRepositories(query)
+    }
+    
+    private suspend fun deleteAllUserRepositories() {
+        userRepositoryDao.deleteAll()
     }
 }

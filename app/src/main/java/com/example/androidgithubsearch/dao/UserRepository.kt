@@ -8,8 +8,11 @@ import com.example.androidgithubsearch.model.db.UserRepositoryEntity
 @Dao
 interface UserRepository {
     @Insert
-    suspend fun  insert(userRepositoryEntity: UserRepositoryEntity)
+    suspend fun insert(userRepositoryEntity: UserRepositoryEntity)
     
     @Query("SELECT * FROM UserRepositoryEntity")
     suspend fun getAll(): List<UserRepositoryEntity>
+    
+    @Query("DELETE FROM UserRepositoryEntity")
+    suspend fun deleteAll()
 }
