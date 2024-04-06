@@ -6,6 +6,7 @@ import com.example.androidgithubsearch.dao.UserRepositoryDao
 import com.example.androidgithubsearch.model.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.model.api.toUserRepositoryEntity
 import com.example.androidgithubsearch.model.db.FavoriteRepositoryEntity
+import com.example.androidgithubsearch.model.db.UserRepositoryEntity
 import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(
@@ -21,10 +22,14 @@ class GitHubRepository @Inject constructor(
         }
     }
 
+    suspend fun getUserRepositories(): List<UserRepositoryEntity> {
+        return userRepositoryDao.getAll()
+    }
+    
     suspend fun searchRepositories(query: String): GitHubSearchRepositoryResponse {
         return apiService.searchRepositories(query)
     }
-
+    
     suspend fun addFavoriteRepository(repository: FavoriteRepositoryEntity) {
         favoriteRepositoryDao.insert(repository)
     }
