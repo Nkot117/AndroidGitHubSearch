@@ -13,12 +13,18 @@ class GitHubRepository @Inject constructor(
     private val apiService: GitHubApiService,
     private val userRepositoryDao: UserRepositoryDao,
     private val favoriteRepositoryDao: FavoriteRepositoryDao
-){
+) {
     suspend fun fetchAndSaveUserRepositories(username: String) {
-        deleteAllUserRepositories()
-        val response = apiService.getUserRepositories(username)
-        response.map { it.toUserRepositoryEntity() }.forEach {
-             userRepositoryDao.insert(it)
+        try {
+            val response = apiService.getUserRepositories(username)
+            if (response.isNotEmpty()) {
+                deleteAllUserRepositories()
+                response.map { it.toUserRepositoryEntity() }.forEach {
+                    userRepositoryDao.insert(it)
+                }
+            }
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
         }
     }
 
