@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.example.androidgithubsearch.model.db.UserRepositoryEntity
 
 @Dao
-interface UserRepository {
+interface UserRepositoryDao {
     @Insert
     suspend fun insert(userRepositoryEntity: UserRepositoryEntity)
     

@@ -1,13 +1,13 @@
 package com.example.androidgithubsearch.repository
 
 import com.example.androidgithubsearch.api.GitHubApiService
-import com.example.androidgithubsearch.dao.UserRepository
+import com.example.androidgithubsearch.dao.UserRepositoryDao
 import com.example.androidgithubsearch.model.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.model.api.toUserRepositoryEntity
 import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(private val apiService: GitHubApiService,
-    private val userRepositoryDao: UserRepository
+    private val userRepositoryDao: UserRepositoryDao
 ){
     suspend fun fetchAndSaveUserRepositories(username: String) {
         deleteAllUserRepositories()
