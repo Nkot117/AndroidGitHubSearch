@@ -64,6 +64,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation("com.squareup.retrofit2:converter-moshi:${retrofitVersion}")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     
     // moshi
     implementation("com.squareup.moshi:moshi:1.12.0")

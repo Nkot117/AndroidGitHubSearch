@@ -11,6 +11,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -25,11 +27,19 @@ object HiltModule {
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
+        
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        
+        val client = OkHttpClient.Builder().addInterceptor(logging).build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
             .build()
+        
         return retrofit.create(GitHubApiService::class.java)
     }
     
