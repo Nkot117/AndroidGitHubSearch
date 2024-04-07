@@ -17,27 +17,37 @@ class GitHubRepository @Inject constructor(
     suspend fun fetchAndSaveUserRepositories(username: String) {
         try {
             val response = apiService.getUserRepositories(username)
-            if (response.isNotEmpty()) {
-                deleteAllUserRepositories()
-                response.map { it.toUserRepositoryEntity() }.forEach {
-                    userRepositoryDao.insert(it)
-                }
+            deleteAllUserRepositories()
+            response.map { it.toUserRepositoryEntity() }.forEach {
+                userRepositoryDao.insert(it)
             }
         } catch (e: Exception) {
             println("Error: ${e.message}")
         }
     }
-
-    suspend fun getUserRepositories(): List<UserRepositoryEntity> {
-        return userRepositoryDao.getAll()
+    
+    suspend fun getUserRepositories(): Result<List<UserRepositoryEntity>> {
+        return try {
+            Result.success(userRepositoryDao.getAll())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
     
-    suspend fun searchRepositories(query: String): GitHubSearchRepositoryResponse {
-        return apiService.searchRepositories(query)
+    suspend fun searchRepositories(query: String): Result<GitHubSearchRepositoryResponse> {
+        return try {
+            Result.success(apiService.searchRepositories(query))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
     
     suspend fun addFavoriteRepository(repository: FavoriteRepositoryEntity) {
-        favoriteRepositoryDao.insert(repository)
+        try {
+            favoriteRepositoryDao.insert(repository)
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
     }
     
     private suspend fun deleteAllUserRepositories() {
