@@ -1,7 +1,8 @@
-package com.example.androidgithubsearch
+package com.example.androidgithubsearch.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.androidgithubsearch.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
