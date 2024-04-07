@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/userRepositoryFragment">
+
+    <fragment
+        android:id="@+id/userRepositoryFragment"
+        android:name="com.example.androidgithubsearch.ui.fragment.UserRepositoryFragment"
+        android:label="fragment_user_repository"
+        tools:layout="@layout/fragment_user_repository" >
+        <action
+            android:id="@+id/action_userRepositoryFragment_to_favoriteRepositoryFragment"
+            app:destination="@id/favoriteRepositoryFragment" />
+        <action
+            android:id="@+id/action_userRepositoryFragment_to_searchRepositoryFragment"
+            app:destination="@id/searchRepositoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchRepositoryFragment"
+        android:name="com.example.androidgithubsearch.ui.fragment.SearchRepositoryFragment"
+        android:label="fragment_search_repository"
+        tools:layout="@layout/fragment_search_repository" >
+        <action
+            android:id="@+id/action_searchRepositoryFragment_to_favoriteRepositoryFragment"
+            app:destination="@id/favoriteRepositoryFragment" />
+        <action
+            android:id="@+id/action_searchRepositoryFragment_to_userRepositoryFragment"
+            app:destination="@id/userRepositoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteRepositoryFragment"
+        android:name="com.example.androidgithubsearch.ui.fragment.FavoriteRepositoryFragment"
+        android:label="fragment_favorite_repository"
+        tools:layout="@layout/fragment_favorite_repository" >
+        <action
+            android:id="@+id/action_favoriteRepositoryFragment_to_searchRepositoryFragment"
+            app:destination="@id/searchRepositoryFragment" />
+        <action
+            android:id="@+id/action_favoriteRepositoryFragment_to_userRepositoryFragment"
+            app:destination="@id/userRepositoryFragment" />
+    </fragment>
+</navigation>
