@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidGitHubSearch</string>
+    <string name="stars_format">%1$d Starts</string>
 </resources>

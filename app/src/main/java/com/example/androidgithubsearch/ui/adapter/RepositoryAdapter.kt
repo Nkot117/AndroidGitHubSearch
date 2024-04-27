@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.RepositoryRowItemBinding
 
 
@@ -16,8 +17,8 @@ class RepositoryAdapter :
         fun bind(repositoryItem: RepositoryItem) {
             binding.name.text = repositoryItem.name
             binding.language.text = repositoryItem.language
-            binding.stars.text = "${repositoryItem.star} stars"
-            binding.updated.text = "${repositoryItem.updated} updated"
+            binding.stars.text = binding.root.context.getString(R.string.stars_format, repositoryItem.star)
+            binding.updated.text = repositoryItem.updated
         }
     }
     
