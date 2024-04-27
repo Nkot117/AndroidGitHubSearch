@@ -32,7 +32,16 @@ class UserRepositoryFragmentViewModel @Inject constructor(
         if (result.isSuccess) {
             val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
             repositoryList?.let { list ->
-                val repositoryItems = list.map { RepositoryItem(it.name) }
+                val repositoryItems = list.map {
+                    RepositoryItem(
+                        name = it.name,
+                        url = it.url,
+                        created = it.created,
+                        updated = it.updated,
+                        language = it.language,
+                        star = it.star
+                    )
+                }
                 _userRepositories.value = repositoryItems
             }
         }

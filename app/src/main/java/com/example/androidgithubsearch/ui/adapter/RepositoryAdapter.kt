@@ -14,7 +14,10 @@ class RepositoryAdapter :
         private val binding: RepositoryRowItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: RepositoryItem) {
-            binding.repositoryNameTextView.text = repositoryItem.name
+            binding.name.text = repositoryItem.name
+            binding.language.text = repositoryItem.language
+            binding.stars.text = "${repositoryItem.star} stars"
+            binding.updated.text = "${repositoryItem.updated} updated"
         }
     }
     

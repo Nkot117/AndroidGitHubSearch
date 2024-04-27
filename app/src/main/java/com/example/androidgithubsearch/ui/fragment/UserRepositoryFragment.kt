@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentUserRepositoryBinding
 import com.example.androidgithubsearch.ui.adapter.RepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel
@@ -29,7 +30,7 @@ class UserRepositoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentUserRepositoryBinding.inflate(inflater, container, false)
-        viewModel.fetchAndLoadUserRepositories("dcadqfcewcax")
+        viewModel.fetchAndLoadUserRepositories("octcat")
         setRepositoryRecyclerView()
         return binding.root
     }
@@ -41,7 +42,16 @@ class UserRepositoryFragment : Fragment() {
     
     private fun setRepositoryRecyclerView() {
         val adapter = RepositoryAdapter()
-        binding.repositoryRecyclerView.adapter = adapter
+        binding.repositoryRecyclerView.also {
+            it.adapter = adapter
+            it.addItemDecoration(
+                DividerItemDecoration(
+                    this.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+        
         lifecycleScope.launch {
             viewModel.userRepositories.collect {
                 adapter.submitList(it)
