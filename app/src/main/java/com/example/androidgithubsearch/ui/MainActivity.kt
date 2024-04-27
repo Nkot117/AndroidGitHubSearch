@@ -7,7 +7,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
