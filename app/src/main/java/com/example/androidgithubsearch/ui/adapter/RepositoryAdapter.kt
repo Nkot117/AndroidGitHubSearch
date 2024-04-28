@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.RepositoryRowItemBinding
 
@@ -19,6 +20,9 @@ class RepositoryAdapter :
             binding.language.text = repositoryItem.language
             binding.stars.text = binding.root.context.getString(R.string.stars_format, repositoryItem.star)
             binding.updated.text = repositoryItem.updated
+            binding.avatar.load(repositoryItem.avatar) {
+                crossfade(true)
+            }
         }
     }
     

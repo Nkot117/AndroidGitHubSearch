@@ -87,4 +87,7 @@ dependencies {
     
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    
+    // Coil
+    implementation("io.coil-kt:coil:1.4.0")
 }

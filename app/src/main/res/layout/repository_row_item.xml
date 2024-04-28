@@ -4,17 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="8sp"
     android:paddingVertical="4sp"
+    android:paddingStart="8sp"
     tools:ignore="RtlSymmetry">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8sp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Repository Name" />
 
@@ -22,8 +31,8 @@
         android:id="@+id/language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_marginTop="4sp"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="@id/name"
         app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Java" />
@@ -32,8 +41,8 @@
         android:id="@+id/stars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_marginStart="8sp"
+        android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@id/language"
         app:layout_constraintTop_toTopOf="@id/language"
         tools:text="100 Stars" />
@@ -42,8 +51,8 @@
         android:id="@+id/updated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_marginStart="8sp"
+        android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@id/stars"
         app:layout_constraintTop_toTopOf="@id/stars"
         tools:text="2021-01-01 Update" />

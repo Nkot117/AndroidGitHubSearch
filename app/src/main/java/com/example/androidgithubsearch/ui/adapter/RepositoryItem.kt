@@ -7,4 +7,5 @@ data class RepositoryItem(
     val updated: String,
     val language: String?,
     val star: Int,
+    val avatar: String
 )

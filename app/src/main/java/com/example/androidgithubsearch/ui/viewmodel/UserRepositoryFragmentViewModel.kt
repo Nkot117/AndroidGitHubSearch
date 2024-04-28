@@ -39,7 +39,8 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                         created = it.created,
                         updated = it.updated,
                         language = it.language,
-                        star = it.star
+                        star = it.star,
+                        avatar = it.avatar
                     )
                 }
                 _userRepositories.value = repositoryItems
