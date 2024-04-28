@@ -28,9 +28,11 @@ class UserRepositoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUserRepositoryBinding.inflate(inflater, container, false)
-        viewModel.fetchAndLoadUserRepositories("octcat")
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.fetchAndLoadUserRepositories("Nkot117")
         setRepositoryRecyclerView()
         return binding.root
     }
