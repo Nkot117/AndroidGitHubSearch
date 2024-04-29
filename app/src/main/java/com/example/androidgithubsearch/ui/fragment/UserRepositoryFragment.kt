@@ -53,11 +53,5 @@ class UserRepositoryFragment : Fragment() {
                 )
             )
         }
-        
-        lifecycleScope.launch {
-            viewModel.userRepositories.collect {
-                adapter.submitList(it)
-            }
-        }
     }
 }

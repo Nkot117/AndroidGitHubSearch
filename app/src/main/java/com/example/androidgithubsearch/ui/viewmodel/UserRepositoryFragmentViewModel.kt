@@ -21,8 +21,8 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     private val gitHubRepository: GitHubRepository
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
-    private val _userRepositories = MutableStateFlow<List<RepositoryItem>>(emptyList())
-    val userRepositories: StateFlow<List<RepositoryItem>> = _userRepositories
+    private val _userRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
+    val userRepositories: LiveData<List<RepositoryItem>> = _userRepositories
     
     // アカウント名
     private val _accountName: MutableLiveData<String> = MutableLiveData("")
@@ -50,11 +50,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
         if (result.isSuccess) {
             val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
             
-            withContext(Dispatchers.Main) {
-                _repositoryCount.value = "${repositoryList?.size} Repositories"
-                _avatarUrl.value = repositoryList?.get(0)?.avatar
-            }
-            
+            // RepositoryItemに変換
             repositoryList?.let { list ->
                 val repositoryItems = list.map {
                     RepositoryItem(
@@ -67,7 +63,14 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                         avatar = it.avatar
                     )
                 }
-                _userRepositories.value = repositoryItems
+                
+                // UIスレッドでLiveDataを更新
+                withContext(Dispatchers.Main) {
+                    _repositoryCount.value = "${repositoryList.size} Repositories"
+                    _avatarUrl.value = repositoryList[0].avatar
+                    _userRepositories.value = repositoryItems
+                }
+                
             }
         }
     }
