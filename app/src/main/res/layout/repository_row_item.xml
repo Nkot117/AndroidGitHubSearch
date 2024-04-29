@@ -61,7 +61,7 @@
             android:paddingVertical="2sp"
             android:paddingHorizontal="4sp"
             android:background="@drawable/label_stars_background"
-            android:text="@{repositoryItem.star + ` Stars`}"
+            android:text="@{@string/stars_format(repositoryItem.star)}"
             app:layout_constraintStart_toEndOf="@id/language"
             app:layout_constraintTop_toTopOf="@id/language"
             tools:text="100 Stars" />
@@ -74,7 +74,7 @@
             android:textSize="13sp"
             android:paddingVertical="2sp"
             android:paddingHorizontal="4sp"
-            android:text="@{repositoryItem.formatUpdatedDate() + ` Update`}"
+            android:text="@{@string/updated_format(repositoryItem.formatUpdatedDate())}"
             android:background="@drawable/label_updated_background"
             app:layout_constraintStart_toEndOf="@id/stars"
             app:layout_constraintTop_toTopOf="@id/stars"
