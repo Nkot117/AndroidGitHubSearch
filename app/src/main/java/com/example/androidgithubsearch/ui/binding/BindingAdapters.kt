@@ -9,7 +9,7 @@ import com.example.androidgithubsearch.ui.adapter.RepositoryItem
 
 
 object BindingAdapters {
-    @BindingAdapter("app:imageUrl")
+    @BindingAdapter("imageUrl")
     @JvmStatic
     fun setAvatarUrl(imageView: ImageView, url: String?) {
         imageView.load(url) {
@@ -17,7 +17,7 @@ object BindingAdapters {
         }
     }
     
-    @BindingAdapter("app:listData")
+    @BindingAdapter("listData")
     @JvmStatic
     fun setListData(recyclerView: RecyclerView, data: List<RepositoryItem>?) {
         val adapter = recyclerView.adapter as RepositoryAdapter
