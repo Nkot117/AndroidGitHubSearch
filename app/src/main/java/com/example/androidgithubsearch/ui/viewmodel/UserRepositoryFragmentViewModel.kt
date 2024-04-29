@@ -70,7 +70,6 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _avatarUrl.value = repositoryList[0].avatar
                     _userRepositories.value = repositoryItems
                 }
-                
             }
         }
     }
