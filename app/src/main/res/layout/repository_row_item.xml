@@ -46,7 +46,10 @@
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name"
+            android:paddingVertical="2sp"
+            android:paddingHorizontal="4sp"
             android:text="@{repositoryItem.language}"
+            android:background="@drawable/label_language_background"
             tools:text="Java" />
 
         <TextView
@@ -55,6 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8sp"
             android:textSize="13sp"
+            android:paddingVertical="2sp"
+            android:paddingHorizontal="4sp"
+            android:background="@drawable/label_stars_background"
             android:text="@{repositoryItem.star + ` Stars`}"
             app:layout_constraintStart_toEndOf="@id/language"
             app:layout_constraintTop_toTopOf="@id/language"
@@ -66,7 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8sp"
             android:textSize="13sp"
+            android:paddingVertical="2sp"
+            android:paddingHorizontal="4sp"
             android:text="@{repositoryItem.formatUpdatedDate() + ` Update`}"
+            android:background="@drawable/label_updated_background"
             app:layout_constraintStart_toEndOf="@id/stars"
             app:layout_constraintTop_toTopOf="@id/stars"
             tools:text="2021-01-01 Update" />
