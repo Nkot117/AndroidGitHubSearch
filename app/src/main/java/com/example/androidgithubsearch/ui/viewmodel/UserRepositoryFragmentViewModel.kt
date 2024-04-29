@@ -8,17 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.repository.GitHubRepository
 import com.example.androidgithubsearch.ui.adapter.RepositoryItem
+import com.example.androidgithubsearch.util.SharedPreferencesKeys
+import com.example.androidgithubsearch.util.SharedPreferencesUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class UserRepositoryFragmentViewModel @Inject constructor(
-    private val gitHubRepository: GitHubRepository
+    private val gitHubRepository: GitHubRepository,
+    private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
     private val _userRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
@@ -37,11 +38,20 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     val avatarUrl: LiveData<String> = _avatarUrl
     
     fun fetchAndLoadUserRepositories(username: String) {
-        _accountName.value = username
+        setUsername(username)
         viewModelScope.launch(Dispatchers.IO) {
-            gitHubRepository.fetchAndSaveUserRepositories(username)
+            gitHubRepository.fetchAndSaveUserRepositories(getUsername())
             getUserRepositories()
         }
+    }
+    
+    private fun setUsername(username: String) {
+        _accountName.value = username
+        preferencesUtil.savePref(SharedPreferencesKeys.USER_NAME, username)
+    }
+    
+    private fun getUsername(): String {
+        return preferencesUtil.getPref(SharedPreferencesKeys.USER_NAME) ?: ""
     }
     
     private suspend fun getUserRepositories() {
