@@ -10,7 +10,7 @@ interface UserRepositoryDao {
     @Insert
     suspend fun insert(userRepositoryEntity: UserRepositoryEntity)
     
-    @Query("SELECT * FROM UserRepositoryEntity")
+    @Query("SELECT * FROM UserRepositoryEntity ORDER BY id DESC")
     suspend fun getAll(): List<UserRepositoryEntity>
     
     @Query("DELETE FROM UserRepositoryEntity")
