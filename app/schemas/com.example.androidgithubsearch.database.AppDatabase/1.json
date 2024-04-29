@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "81dd49b6e5da3b72eabb616cd2f64a2d",
+    "identityHash": "fec314625635a8e074c0e96528716750",
     "entities": [
       {
         "tableName": "UserRepositoryEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `avatar` TEXT NOT NULL, `created` TEXT NOT NULL, `updated` TEXT NOT NULL, `language` TEXT NOT NULL, `star` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `avatar` TEXT NOT NULL, `created` INTEGER NOT NULL, `updated` INTEGER NOT NULL, `language` TEXT NOT NULL, `star` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -35,13 +35,13 @@
           {
             "fieldPath": "created",
             "columnName": "created",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "updated",
             "columnName": "updated",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -102,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81dd49b6e5da3b72eabb616cd2f64a2d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fec314625635a8e074c0e96528716750')"
     ]
   }
 }
