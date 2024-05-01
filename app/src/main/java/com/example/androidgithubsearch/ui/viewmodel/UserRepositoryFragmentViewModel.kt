@@ -41,6 +41,13 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     private val _showAccountSettingDialog: MutableLiveData<Boolean> = MutableLiveData(false)
     val showAccountSettingDialog: LiveData<Boolean> = _showAccountSettingDialog
 
+    init {
+         _accountName.value = getUsername()
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserRepositories()
+        }
+    }
+
     fun fetchAndLoadUserRepositories(username: String) {
         setUsername(username)
         viewModelScope.launch(Dispatchers.IO) {
