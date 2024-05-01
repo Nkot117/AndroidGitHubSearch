@@ -34,8 +34,8 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     val repositoryCount: LiveData<String> = _repositoryCount
 
     // アバターのURL
-    private val _avatarUrl: MutableLiveData<String> = MutableLiveData("")
-    val avatarUrl: LiveData<String> = _avatarUrl
+    private val _avatarUrl: MutableLiveData<String?> = MutableLiveData(null)
+    val avatarUrl: LiveData<String?> = _avatarUrl
 
     // アカウント設定ボタンタップ
     private val _showAccountSettingDialog: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -82,7 +82,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             if (repositoryList.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
                     _repositoryCount.value = "0 Repositories"
-                    _avatarUrl.value = ""
+                    _avatarUrl.value = null
                     _userRepositories.value = emptyList()
                 }
                 return
