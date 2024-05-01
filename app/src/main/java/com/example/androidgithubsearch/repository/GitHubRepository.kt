@@ -15,8 +15,8 @@ class GitHubRepository @Inject constructor(
 ) {
     suspend fun fetchAndSaveUserRepositories(username: String) {
         try {
-            val response = apiService.getUserRepositories(username)
             deleteAllUserRepositories()
+            val response = apiService.getUserRepositories(username)
             response.map { it.toUserRepositoryEntity() }.forEach {
                 userRepositoryDao.insert(it)
             }
