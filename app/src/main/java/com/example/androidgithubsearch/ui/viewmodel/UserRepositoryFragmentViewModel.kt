@@ -18,21 +18,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRepositoryFragmentViewModel @Inject constructor(
-    private val gitHubRepository: GitHubRepository,
-    private val preferencesUtil: SharedPreferencesUtil
+        private val gitHubRepository: GitHubRepository,
+        private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
     private val _userRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
     val userRepositories: LiveData<List<RepositoryItem>> = _userRepositories
-    
+
     // アカウント名
     private val _accountName: MutableLiveData<String> = MutableLiveData("")
     val accountName: LiveData<String> = _accountName
-    
+
     // リポジトリの数
     private val _repositoryCount: MutableLiveData<String> = MutableLiveData("")
     val repositoryCount: LiveData<String> = _repositoryCount
-    
+
     // アバターのURL
     private val _avatarUrl: MutableLiveData<String> = MutableLiveData("")
     val avatarUrl: LiveData<String> = _avatarUrl
@@ -40,7 +40,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     // アカウント設定ボタンタップ
     private val _showAccountSettingDialog: MutableLiveData<Boolean> = MutableLiveData(false)
     val showAccountSettingDialog: LiveData<Boolean> = _showAccountSettingDialog
-    
+
     fun fetchAndLoadUserRepositories(username: String) {
         setUsername(username)
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,36 +56,45 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     fun showAccountSettingDialogComplete() {
         _showAccountSettingDialog.value = false
     }
-    
+
     private fun setUsername(username: String) {
         _accountName.value = username
         preferencesUtil.savePref(SharedPreferencesKeys.USER_NAME, username)
     }
-    
+
     private fun getUsername(): String {
         return preferencesUtil.getPref(SharedPreferencesKeys.USER_NAME) ?: ""
     }
-    
+
     private suspend fun getUserRepositories() {
         val result = gitHubRepository.getUserRepositories()
-        
+
         if (result.isSuccess) {
             val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
-            
+
+            if (repositoryList.isNullOrEmpty()) {
+                withContext(Dispatchers.Main) {
+                    _repositoryCount.value = "0 Repositories"
+                    _avatarUrl.value = ""
+                    _userRepositories.value = emptyList()
+                }
+                return
+            }
+
             // RepositoryItemに変換
-            repositoryList?.let { list ->
+            repositoryList.let { list ->
                 val repositoryItems = list.map {
                     RepositoryItem(
-                        name = it.name,
-                        url = it.url,
-                        created = it.created,
-                        updated = it.updated,
-                        language = it.language,
-                        star = it.star,
-                        avatar = it.avatar
+                            name = it.name,
+                            url = it.url,
+                            created = it.created,
+                            updated = it.updated,
+                            language = it.language,
+                            star = it.star,
+                            avatar = it.avatar
                     )
                 }
-                
+
                 // UIスレッドでLiveDataを更新
                 withContext(Dispatchers.Main) {
                     _repositoryCount.value = "${repositoryList.size} Repositories"
