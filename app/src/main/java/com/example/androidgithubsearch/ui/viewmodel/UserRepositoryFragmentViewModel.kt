@@ -36,6 +36,10 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     // アバターのURL
     private val _avatarUrl: MutableLiveData<String> = MutableLiveData("")
     val avatarUrl: LiveData<String> = _avatarUrl
+
+    // アカウント設定ボタンタップ
+    private val _showAccountSettingDialog: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showAccountSettingDialog: LiveData<Boolean> = _showAccountSettingDialog
     
     fun fetchAndLoadUserRepositories(username: String) {
         setUsername(username)
@@ -43,6 +47,14 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             gitHubRepository.fetchAndSaveUserRepositories(getUsername())
             getUserRepositories()
         }
+    }
+
+    fun onAccountSettingButtonClicked() {
+        _showAccountSettingDialog.value = true
+    }
+
+    fun showAccountSettingDialogComplete() {
+        _showAccountSettingDialog.value = false
     }
     
     private fun setUsername(username: String) {

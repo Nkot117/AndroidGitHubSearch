@@ -1,13 +1,17 @@
 package com.example.androidgithubsearch.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.FragmentUserRepositoryBinding
 import com.example.androidgithubsearch.ui.adapter.RepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel
@@ -18,13 +22,13 @@ import kotlinx.coroutines.launch
 class UserRepositoryFragment : Fragment() {
     private var _binding: FragmentUserRepositoryBinding? = null
     private val binding get() = _binding!!
-    
+
     private val viewModel: UserRepositoryFragmentViewModel by viewModels()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,16 +36,21 @@ class UserRepositoryFragment : Fragment() {
         _binding = FragmentUserRepositoryBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.fetchAndLoadUserRepositories("Nkot117")
         setRepositoryRecyclerView()
+        viewModel.showAccountSettingDialog.observe(viewLifecycleOwner) {
+            if (it) {
+                showAccountSettingDialog()
+                viewModel.showAccountSettingDialogComplete()
+            }
+        }
         return binding.root
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-    
+
     private fun setRepositoryRecyclerView() {
         val adapter = RepositoryAdapter()
         binding.repositoryRecyclerView.also {
@@ -53,5 +62,23 @@ class UserRepositoryFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun showAccountSettingDialog() {
+        val dialogLayout = layoutInflater.inflate(R.layout.accout_setting_dialog, null, false)
+        val editText = dialogLayout.findViewById<EditText>(R.id.editTextDialog)
+        editText.setText(viewModel.accountName.value)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Account Setting")
+            .setView(dialogLayout)
+            .setPositiveButton("OK") { _, _ ->
+                val inputAccountName = editText.text.toString()
+                if (inputAccountName.isNotBlank()) {
+                    viewModel.fetchAndLoadUserRepositories(inputAccountName)
+                }
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .create()
+        dialog.show()
     }
 }
