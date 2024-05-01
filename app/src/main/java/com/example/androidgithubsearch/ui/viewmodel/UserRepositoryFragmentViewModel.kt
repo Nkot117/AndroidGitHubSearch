@@ -41,8 +41,12 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     private val _showAccountSettingDialog: MutableLiveData<Boolean> = MutableLiveData(false)
     val showAccountSettingDialog: LiveData<Boolean> = _showAccountSettingDialog
 
+    // リポジトリリスト表示
+    private val _isRepositoryListVisible: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isRepositoryListVisible: LiveData<Boolean> = _isRepositoryListVisible
+
     init {
-         _accountName.value = getUsername()
+        _accountName.value = getUsername()
         viewModelScope.launch(Dispatchers.IO) {
             getUserRepositories()
         }
@@ -84,6 +88,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _repositoryCount.value = "0 Repositories"
                     _avatarUrl.value = null
                     _userRepositories.value = emptyList()
+                    _isRepositoryListVisible.value = false
                 }
                 return
             }
@@ -107,6 +112,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _repositoryCount.value = "${repositoryList.size} Repositories"
                     _avatarUrl.value = repositoryList[0].avatar
                     _userRepositories.value = repositoryItems
+                    _isRepositoryListVisible.value = true
                 }
             }
         }
