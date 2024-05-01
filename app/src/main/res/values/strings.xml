@@ -5,4 +5,5 @@
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="user">User</string>
+    <string name="account_name_edit_hint">Enter Account Name</string>
 </resources>
