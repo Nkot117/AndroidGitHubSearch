@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui
+package com.example.androidgithubsearch.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

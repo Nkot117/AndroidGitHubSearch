@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.RepositoryRowItemBinding
+import com.example.androidgithubsearch.ui.activity.WebViewActivity
 
 
 class RepositoryAdapter :
@@ -15,6 +16,10 @@ class RepositoryAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: RepositoryItem) {
             binding.repositoryItem = repositoryItem
+            binding.root.setOnClickListener { view ->
+                val intent = WebViewActivity.createIntent(view.context, repositoryItem.url)
+                view.context.startActivity(intent)
+            }
         }
     }
     
