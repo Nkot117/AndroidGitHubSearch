@@ -43,13 +43,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4sp"
+            android:background="@drawable/label_language_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
+            android:text="@{repositoryItem.language}"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name"
-            android:paddingVertical="2sp"
-            android:paddingHorizontal="4sp"
-            android:text="@{repositoryItem.language}"
-            android:background="@drawable/label_language_background"
             tools:text="Java" />
 
         <TextView
@@ -57,11 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8sp"
-            android:textSize="13sp"
-            android:paddingVertical="2sp"
-            android:paddingHorizontal="4sp"
             android:background="@drawable/label_stars_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
             android:text="@{@string/stars_format(repositoryItem.star)}"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/language"
             app:layout_constraintTop_toTopOf="@id/language"
             tools:text="100 Stars" />
@@ -71,14 +71,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8sp"
-            android:textSize="13sp"
-            android:paddingVertical="2sp"
-            android:paddingHorizontal="4sp"
-            android:text="@{@string/updated_format(repositoryItem.formatUpdatedDate())}"
             android:background="@drawable/label_updated_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
+            android:text="@{@string/updated_format(repositoryItem.formatUpdatedDate())}"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/stars"
             app:layout_constraintTop_toTopOf="@id/stars"
             tools:text="2021-01-01 Update" />
+
+        <ImageView
+            android:id="@+id/openWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/open_web_view_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
