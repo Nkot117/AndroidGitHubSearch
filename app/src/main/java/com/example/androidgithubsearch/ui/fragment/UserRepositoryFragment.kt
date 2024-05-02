@@ -43,6 +43,13 @@ class UserRepositoryFragment : Fragment() {
                 viewModel.showAccountSettingDialogComplete()
             }
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.accountName.value?.let {
+                binding.swipeRefreshLayout.isRefreshing = false
+                viewModel.fetchAndLoadUserRepositories(it)
+            } ?: return@setOnRefreshListener
+        }
         return binding.root
     }
 
