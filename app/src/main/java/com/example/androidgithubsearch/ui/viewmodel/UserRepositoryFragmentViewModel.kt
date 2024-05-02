@@ -45,7 +45,12 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     private val _isRepositoryListVisible: MutableLiveData<Boolean> = MutableLiveData(true)
     val isRepositoryListVisible: LiveData<Boolean> = _isRepositoryListVisible
 
+    // ローディングの状態
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     init {
+        _isLoading.value = true
         _accountName.value = getUsername()
         viewModelScope.launch(Dispatchers.IO) {
             getUserRepositories()
@@ -53,6 +58,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     }
 
     fun fetchAndLoadUserRepositories(username: String) {
+        _isLoading.value = true
         setUsername(username)
         viewModelScope.launch(Dispatchers.IO) {
             gitHubRepository.fetchAndSaveUserRepositories(getUsername())
@@ -89,6 +95,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _avatarUrl.value = null
                     _userRepositories.value = emptyList()
                     _isRepositoryListVisible.value = false
+                    _isLoading.value = false
                 }
                 return
             }
@@ -113,6 +120,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _avatarUrl.value = repositoryList[0].avatar
                     _userRepositories.value = repositoryItems
                     _isRepositoryListVisible.value = true
+                    _isLoading.value = false
                 }
             }
         }
