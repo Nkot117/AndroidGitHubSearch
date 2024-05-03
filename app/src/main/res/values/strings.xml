@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AndroidGitHubSearch</string>
-    <string name="stars_format">%1$d Starts</string>
+    <string name="stars_format">%1$d Stars</string>
     <string name="updated_format">%1$s Updated</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
