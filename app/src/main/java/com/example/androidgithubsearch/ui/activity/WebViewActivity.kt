@@ -18,7 +18,6 @@ class WebViewActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         _binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
