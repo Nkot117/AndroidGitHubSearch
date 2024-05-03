@@ -56,4 +56,8 @@ object HiltModule {
     @Provides
     @Singleton
     fun provideFavoriteRepositoryDao(database: AppDatabase) = database.favoriteRepositoryDao()
+    
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context) = context.getSharedPreferences("AndroidGitHubSearch", Context.MODE_PRIVATE)
 }

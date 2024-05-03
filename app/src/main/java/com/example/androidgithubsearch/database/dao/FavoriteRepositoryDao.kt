@@ -1,8 +1,8 @@
-package com.example.androidgithubsearch.dao
+package com.example.androidgithubsearch.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import com.example.androidgithubsearch.model.db.FavoriteRepositoryEntity
+import com.example.androidgithubsearch.database.entity.FavoriteRepositoryEntity
 
 @Dao
 interface FavoriteRepositoryDao {
