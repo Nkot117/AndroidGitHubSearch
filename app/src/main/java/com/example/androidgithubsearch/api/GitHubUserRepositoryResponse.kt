@@ -1,6 +1,7 @@
 package com.example.androidgithubsearch.api
 
 import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
+import com.example.androidgithubsearch.ui.adapter.RepositoryItem
 import com.squareup.moshi.Json
 import java.text.SimpleDateFormat
 import java.util.Date

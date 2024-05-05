@@ -2,7 +2,7 @@ package com.example.androidgithubsearch.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
+import com.example.androidgithubsearch.ui.adapter.RepositoryItem
 import java.util.Date
 
 @Entity
@@ -15,4 +15,16 @@ data class UserRepositoryEntity(
     val updated: Date,
     val language: String,
     val star: Int,
-)
+) {
+    fun toRepositoryItem(): RepositoryItem {
+        return   RepositoryItem(
+            name = name,
+            url = url,
+            created = created,
+            updated = updated,
+            language = language,
+            star = star,
+            avatar = avatar
+        )
+    }
+}
