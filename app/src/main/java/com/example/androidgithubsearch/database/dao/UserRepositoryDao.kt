@@ -1,16 +1,16 @@
-package com.example.androidgithubsearch.dao
+package com.example.androidgithubsearch.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.androidgithubsearch.model.db.UserRepositoryEntity
+import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
 
 @Dao
 interface UserRepositoryDao {
     @Insert
     suspend fun insert(userRepositoryEntity: UserRepositoryEntity)
     
-    @Query("SELECT * FROM UserRepositoryEntity")
+    @Query("SELECT * FROM UserRepositoryEntity ORDER BY id DESC")
     suspend fun getAll(): List<UserRepositoryEntity>
     
     @Query("DELETE FROM UserRepositoryEntity")

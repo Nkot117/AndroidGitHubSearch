@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AndroidGitHubSearch</string>
+    <string name="stars_format">%1$d Stars</string>
+    <string name="updated_format">%1$s Updated</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="user">User</string>
+    <string name="account_name_edit_hint">Enter Account Name</string>
+    <string name="repository_not_found">Repository not found</string>
 </resources>
