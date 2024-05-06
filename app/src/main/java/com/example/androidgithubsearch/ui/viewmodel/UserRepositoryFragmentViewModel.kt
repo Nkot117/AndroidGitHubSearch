@@ -103,15 +103,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             // RepositoryItemに変換
             repositoryList.let { list ->
                 val repositoryItems = list.map {
-                    RepositoryItem(
-                            name = it.name,
-                            url = it.url,
-                            created = it.created,
-                            updated = it.updated,
-                            language = it.language,
-                            star = it.star,
-                            avatar = it.avatar
-                    )
+                    it.toRepositoryItem()
                 }
 
                 // UIスレッドでLiveDataを更新
