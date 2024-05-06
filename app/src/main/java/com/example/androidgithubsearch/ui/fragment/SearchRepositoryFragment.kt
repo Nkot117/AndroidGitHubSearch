@@ -1,10 +1,13 @@
 package com.example.androidgithubsearch.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentSearchRepositoryBinding
@@ -18,11 +21,11 @@ class SearchRepositoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<SearchRepositoryFragmentViewModel>()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,11 +33,11 @@ class SearchRepositoryFragment : Fragment() {
         _binding = FragmentSearchRepositoryBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.searchRepository("android")
         setRepositoryRecyclerView()
+        setSearchView()
         return binding.root
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -51,5 +54,30 @@ class SearchRepositoryFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun setSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query.isNullOrEmpty()) {
+                    return false
+                }
+                viewModel.searchRepository(query)
+
+                // キーボードを閉じる
+                val imm =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(binding.searchView.windowToken, 0)
+
+                // フォーカスを外す
+                binding.searchView.clearFocus()
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
     }
 }

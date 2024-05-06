@@ -19,7 +19,16 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
     private var _searchRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
     val searchRepositories: LiveData<List<RepositoryItem>> = _searchRepositories
 
+    private val searchQuery: MutableLiveData<String> = MutableLiveData()
+
     fun searchRepository(query: String) {
+        // 同じ文言で何回も検索しないようにする
+        if (searchQuery.value == query) {
+            return
+        }
+
+        searchQuery.value = query
+
         viewModelScope.launch {
             val result = gitHubRepository.searchRepositories(query)
 
@@ -28,9 +37,9 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
                 val totalCount = data.totalCount
 
-                val repositoryList = data.items ?: emptyList()
+                val repositoryList = data.items
 
-                if (repositoryList.isNullOrEmpty()) {
+                if (repositoryList.isEmpty()) {
                     return@launch
                 }
 
@@ -38,7 +47,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                     it.toRepositoryItem()
                 }
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     _searchRepositories.value = repositoryItems
                 }
             }
