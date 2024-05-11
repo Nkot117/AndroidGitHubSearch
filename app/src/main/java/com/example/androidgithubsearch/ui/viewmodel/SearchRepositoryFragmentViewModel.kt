@@ -22,19 +22,30 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     private val searchQuery: MutableLiveData<String> = MutableLiveData()
 
-    private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
+    private val _currentPage: MutableLiveData<Int> = MutableLiveData(1)
     val currentPage: LiveData<Int> = _currentPage
 
-    fun searchRepository(query: String) {
-        // 同じ文言で何回も検索しないようにする
-        if (searchQuery.value == query) {
-            return
-        }
+    fun clickNextPage() {
+        _currentPage.value = _currentPage.value?.plus(1)
+        searchRepository()
+    }
 
+    fun clickPreviousPage() {
+        _currentPage.value = _currentPage.value?.minus(1)
+        searchRepository()
+    }
+
+    fun clickSearchButton(query: String) {
         searchQuery.value = query
+        _currentPage.value = 1
+        searchRepository()
+    }
 
+    private fun searchRepository() {
         viewModelScope.launch {
-            val result = gitHubRepository.searchRepositories(query, _currentPage.value?.plus(1) ?: 1)
+            val result = searchQuery.value?.let {
+                gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
+            } ?: return@launch
 
             if (result.isSuccess) {
                 val data = result.getOrNull() ?: return@launch

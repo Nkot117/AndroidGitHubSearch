@@ -62,7 +62,7 @@ class SearchRepositoryFragment : Fragment() {
                 if (query.isNullOrEmpty()) {
                     return false
                 }
-                viewModel.searchRepository(query)
+                viewModel.clickSearchButton(query)
 
                 // キーボードを閉じる
                 val imm =

@@ -36,9 +36,9 @@
             android:fadeScrollbars="false"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/currentPageTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchView"
-            app:layout_constraintBottom_toTopOf="@id/currentPageTextView"
             app:listData="@{viewModel.searchRepositories}" />
 
 
@@ -46,32 +46,34 @@
             android:id="@+id/nextPageImageView"
             android:layout_width="34sp"
             android:layout_height="34sp"
+            android:onClick="@{() -> viewModel.clickNextPage()}"
             android:src="@drawable/arrow_forward_24px"
-            app:layout_constraintTop_toTopOf="@+id/currentPageTextView"
             app:layout_constraintBottom_toBottomOf="@+id/currentPageTextView"
-            app:layout_constraintStart_toEndOf="@+id/currentPageTextView"/>
+            app:layout_constraintStart_toEndOf="@+id/currentPageTextView"
+            app:layout_constraintTop_toTopOf="@+id/currentPageTextView" />
 
         <TextView
             android:id="@+id/currentPageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8sp"
+            android:paddingHorizontal="43sp"
             android:text="@{viewModel.currentPage.toString()}"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingHorizontal="43sp"
-            android:layout_marginBottom="8sp"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="1" />
 
         <ImageView
             android:id="@+id/backPageImageView"
             android:layout_width="34sp"
             android:layout_height="34sp"
+            android:onClick="@{() -> viewModel.clickPreviousPage()}"
             android:src="@drawable/arrow_back_24px"
-            app:layout_constraintTop_toTopOf="@+id/currentPageTextView"
             app:layout_constraintBottom_toBottomOf="@+id/currentPageTextView"
-            app:layout_constraintEnd_toStartOf="@+id/currentPageTextView"/>
+            app:layout_constraintEnd_toStartOf="@+id/currentPageTextView"
+            app:layout_constraintTop_toTopOf="@+id/currentPageTextView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
