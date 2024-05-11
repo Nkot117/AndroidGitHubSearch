@@ -9,5 +9,5 @@ interface GitHubApiService {
     suspend fun getUserRepositories(@Path("username") username: String): List<GitHubUserRepositoryResponse>
 
     @GET("search/repositories")
-    suspend fun searchRepositories(@Query("q") query: String): GitHubSearchRepositoryResponse
+    suspend fun searchRepositories(@Query("q") query: String, @Query("page") page: Int): GitHubSearchRepositoryResponse
 }

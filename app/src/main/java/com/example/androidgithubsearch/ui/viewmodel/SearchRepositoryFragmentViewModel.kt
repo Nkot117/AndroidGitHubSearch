@@ -22,6 +22,9 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     private val searchQuery: MutableLiveData<String> = MutableLiveData()
 
+    private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
+    val currentPage: LiveData<Int> = _currentPage
+
     fun searchRepository(query: String) {
         // 同じ文言で何回も検索しないようにする
         if (searchQuery.value == query) {
@@ -31,13 +34,13 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         searchQuery.value = query
 
         viewModelScope.launch {
-            val result = gitHubRepository.searchRepositories(query)
+            val result = gitHubRepository.searchRepositories(query, _currentPage.value?.plus(1) ?: 1)
 
             if (result.isSuccess) {
                 val data = result.getOrNull() ?: return@launch
 
                 val totalCount = data.totalCount
-                Log.d("熊倉", "totalCount: $totalCount")
+                Log.d("SearchRepositoryFragmentViewModel", "totalCount: $totalCount")
 
                 val repositoryList = data.items
 
