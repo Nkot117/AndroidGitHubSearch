@@ -20,6 +20,9 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
     private var _searchRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
     val searchRepositories: LiveData<List<RepositoryItem>> = _searchRepositories
 
+    private val _isRepositoryListVisible: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isRepositoryListVisible: LiveData<Boolean> = _isRepositoryListVisible
+
     private val searchQuery: MutableLiveData<String> = MutableLiveData()
 
     private val _currentPage: MutableLiveData<Int> = MutableLiveData(1)
@@ -56,6 +59,10 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                 val repositoryList = data.items
 
                 if (repositoryList.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        _searchRepositories.value = emptyList()
+                        _isRepositoryListVisible.value = false
+                    }
                     return@launch
                 }
 
@@ -65,6 +72,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
                 withContext(Dispatchers.Main) {
                     _searchRepositories.value = repositoryItems
+                    _isRepositoryListVisible.value = true
                 }
             }
         }
