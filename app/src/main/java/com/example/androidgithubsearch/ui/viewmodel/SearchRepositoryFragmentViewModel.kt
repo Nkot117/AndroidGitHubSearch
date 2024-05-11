@@ -1,5 +1,6 @@
 package com.example.androidgithubsearch.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                 val data = result.getOrNull() ?: return@launch
 
                 val totalCount = data.totalCount
+                Log.d("熊倉", "totalCount: $totalCount")
 
                 val repositoryList = data.items
 
