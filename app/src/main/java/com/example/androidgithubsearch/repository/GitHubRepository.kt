@@ -32,10 +32,13 @@ class GitHubRepository @Inject constructor(
             Result.failure(e)
         }
     }
-    
-    suspend fun searchRepositories(query: String): Result<GitHubSearchRepositoryResponse> {
+
+    suspend fun searchRepositories(
+        query: String,
+        page: Int
+    ): Result<GitHubSearchRepositoryResponse> {
         return try {
-            Result.success(apiService.searchRepositories(query))
+            Result.success(apiService.searchRepositories(query, page))
         } catch (e: Exception) {
             Result.failure(e)
         }
