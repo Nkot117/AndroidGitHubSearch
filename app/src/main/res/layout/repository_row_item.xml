@@ -90,5 +90,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/addFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/heart_plus_24px"
+            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
+            app:layout_constraintEnd_toStartOf="@+id/openWebView"
+            app:layout_constraintTop_toTopOf="@+id/openWebView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
