@@ -12,6 +12,7 @@ data class GitHubSearchRepositoryResponse(
     val items: List<Item>
 ) {
     data class Item(
+        val id: Int,
         @Json(name = "full_name")
         val name: String,
         @Json(name = "html_url")
@@ -33,6 +34,7 @@ data class GitHubSearchRepositoryResponse(
 
         fun toRepositoryItem(): RepositoryItem {
             return RepositoryItem(
+                id = id,
                 name = name,
                 url = url,
                 created = dateStringToDate(created),

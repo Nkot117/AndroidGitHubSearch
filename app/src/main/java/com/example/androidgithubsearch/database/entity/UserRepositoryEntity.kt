@@ -18,6 +18,7 @@ data class UserRepositoryEntity(
 ) {
     fun toRepositoryItem(): RepositoryItem {
         return   RepositoryItem(
+            id = id,
             name = name,
             url = url,
             created = created,
