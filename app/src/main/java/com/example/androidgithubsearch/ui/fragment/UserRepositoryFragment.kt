@@ -59,7 +59,7 @@ class UserRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = RepositoryAdapter()
+        val adapter = RepositoryAdapter(this.lifecycleScope, viewModel.gitHubRepository)
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(
