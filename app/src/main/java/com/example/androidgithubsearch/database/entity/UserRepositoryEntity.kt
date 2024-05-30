@@ -25,7 +25,8 @@ data class UserRepositoryEntity(
             updated = updated,
             language = language,
             star = star,
-            avatar = avatar
+            avatar = avatar,
+            isFavorite = false
         )
     }
 }

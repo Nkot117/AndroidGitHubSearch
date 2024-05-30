@@ -66,8 +66,15 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                     return@launch
                 }
 
+                val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
+                val favoriteRepositoryIdList = if(favoriteRepositoriesResult.isSuccess) {
+                    favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
+                } else {
+                    emptyList()
+                }
+
                 val repositoryItems: List<RepositoryItem> = repositoryList.map {
-                    it.toRepositoryItem()
+                    it.toRepositoryItem(favoriteRepositoryIdList)
                 }
 
                 withContext(Dispatchers.Main) {

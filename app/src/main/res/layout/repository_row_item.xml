@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="repositoryItem"
             type="com.example.androidgithubsearch.ui.adapter.RepositoryItem" />
@@ -96,9 +98,22 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12sp"
             android:src="@drawable/heart_plus_24px"
+            android:visibility="@{repositoryItem.isFavorite ?  View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/openWebView"
             app:layout_constraintEnd_toStartOf="@+id/openWebView"
             app:layout_constraintTop_toTopOf="@+id/openWebView" />
+
+        <ImageView
+            android:id="@+id/removeFavorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/favorite_24px"
+            android:visibility="@{repositoryItem.isFavorite ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
+            app:layout_constraintEnd_toStartOf="@+id/openWebView"
+            app:layout_constraintTop_toTopOf="@+id/openWebView"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

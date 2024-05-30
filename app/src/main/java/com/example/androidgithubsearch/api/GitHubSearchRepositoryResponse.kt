@@ -32,7 +32,7 @@ data class GitHubSearchRepositoryResponse(
             val avatar: String
         )
 
-        fun toRepositoryItem(): RepositoryItem {
+        fun toRepositoryItem(favoriteIdList: List<Int>): RepositoryItem {
             return RepositoryItem(
                 id = id,
                 name = name,
@@ -41,7 +41,8 @@ data class GitHubSearchRepositoryResponse(
                 updated = dateStringToDate(updated),
                 language = language ?: "Unknown",
                 star = star,
-                avatar = owner.avatar
+                avatar = owner.avatar,
+                isFavorite = favoriteIdList.contains(id)
             )
         }
 
