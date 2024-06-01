@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentSearchRepositoryBinding
 import com.example.androidgithubsearch.ui.adapter.RepositoryAdapter
@@ -44,7 +45,7 @@ class SearchRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = RepositoryAdapter()
+        val adapter = RepositoryAdapter(this.lifecycleScope, viewModel.gitHubRepository)
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(

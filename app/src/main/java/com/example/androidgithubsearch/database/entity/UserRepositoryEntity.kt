@@ -16,15 +16,17 @@ data class UserRepositoryEntity(
     val language: String,
     val star: Int,
 ) {
-    fun toRepositoryItem(): RepositoryItem {
+    fun toRepositoryItem(favoriteIdList: List<Int>): RepositoryItem {
         return   RepositoryItem(
+            id = id,
             name = name,
             url = url,
             created = created,
             updated = updated,
             language = language,
             star = star,
-            avatar = avatar
+            avatar = avatar,
+            isFavorite = favoriteIdList.contains(id)
         )
     }
 }
