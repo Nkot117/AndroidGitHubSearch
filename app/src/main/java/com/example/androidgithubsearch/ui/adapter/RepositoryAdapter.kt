@@ -32,6 +32,7 @@ class RepositoryAdapter(
             binding.addFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.VISIBLE
                 binding.addFavorite.visibility = View.GONE
+                repositoryItem.isFavorite = true
                 coroutineScope.launch {
                     gitHubRepository.addFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
                 }
@@ -40,6 +41,7 @@ class RepositoryAdapter(
             binding.removeFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.GONE
                 binding.addFavorite.visibility = View.VISIBLE
+                repositoryItem.isFavorite = false
                 coroutineScope.launch {
                     gitHubRepository.deleteFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
                 }

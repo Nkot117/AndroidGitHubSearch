@@ -100,10 +100,17 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                 return
             }
 
+            val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
+            val favoriteRepositoryIdList = if(favoriteRepositoriesResult.isSuccess) {
+                favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
+            } else {
+                emptyList()
+            }
+
             // RepositoryItemに変換
             repositoryList.let { list ->
                 val repositoryItems = list.map {
-                    it.toRepositoryItem()
+                    it.toRepositoryItem(favoriteRepositoryIdList)
                 }
 
                 // UIスレッドでLiveDataを更新

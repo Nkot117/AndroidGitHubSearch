@@ -14,7 +14,7 @@ data class RepositoryItem(
     val language: String?,
     val star: Int,
     val avatar: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 ) {
     fun formatUpdatedDate(): String {
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
