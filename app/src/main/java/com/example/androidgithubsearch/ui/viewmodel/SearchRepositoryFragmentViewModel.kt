@@ -38,10 +38,12 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         searchRepository()
     }
 
-    fun clickSearchButton(query: String) {
-        searchQuery.value = query
-        _currentPage.value = 1
-        searchRepository()
+    fun clickSearchButton(query: String?) {
+        query?.let{
+            searchQuery.value = it
+            _currentPage.value = 1
+            searchRepository()
+        }
     }
 
     private fun searchRepository() {

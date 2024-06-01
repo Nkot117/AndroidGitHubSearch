@@ -60,9 +60,6 @@ class SearchRepositoryFragment : Fragment() {
     private fun setSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query.isNullOrEmpty()) {
-                    return false
-                }
                 viewModel.clickSearchButton(query)
 
                 // キーボードを閉じる
