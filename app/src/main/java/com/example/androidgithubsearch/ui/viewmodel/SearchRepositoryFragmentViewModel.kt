@@ -25,7 +25,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     private val searchQuery: MutableLiveData<String> = MutableLiveData()
 
-    private val _currentPage: MutableLiveData<Int> = MutableLiveData(1)
+    private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
     val currentPage: LiveData<Int> = _currentPage
 
     fun clickNextPage() {

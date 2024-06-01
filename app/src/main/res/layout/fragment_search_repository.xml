@@ -47,7 +47,7 @@
             android:layout_height="34sp"
             android:onClick="@{() -> viewModel.clickNextPage()}"
             android:src="@drawable/arrow_forward_24px"
-            android:visibility="@{viewModel.isRepositoryListVisible ? View.VISIBLE :  View.GONE}"
+            android:visibility="@{viewModel.currentPage >= 1 ? View.VISIBLE :  View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/currentPageTextView"
             app:layout_constraintStart_toEndOf="@+id/currentPageTextView"
             app:layout_constraintTop_toTopOf="@+id/currentPageTextView" />
@@ -60,7 +60,7 @@
             android:paddingHorizontal="43sp"
             android:text="@{viewModel.currentPage.toString()}"
             android:textSize="34sp"
-            android:visibility="@{viewModel.isRepositoryListVisible ? View.VISIBLE :  View.GONE}"
+            android:visibility="@{viewModel.currentPage >= 1 ? View.VISIBLE :  View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             android:layout_height="34sp"
             android:onClick="@{() -> viewModel.clickPreviousPage()}"
             android:src="@drawable/arrow_back_24px"
-            android:visibility="@{viewModel.isRepositoryListVisible ? View.VISIBLE :  View.GONE}"
+            android:visibility="@{viewModel.currentPage > 1 ? View.VISIBLE :  View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/currentPageTextView"
             app:layout_constraintEnd_toStartOf="@+id/currentPageTextView"
             app:layout_constraintTop_toTopOf="@+id/currentPageTextView" />
