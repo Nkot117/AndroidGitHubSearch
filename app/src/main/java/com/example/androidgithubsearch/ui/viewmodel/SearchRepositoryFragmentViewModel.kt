@@ -35,7 +35,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
     }
 
     fun clickSearchButton(query: String?) {
-        query?.let{
+        query?.let {
             searchQuery = it
             _currentPage.value = 1
             searchRepository()
@@ -64,7 +64,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                 }
 
                 val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
-                val favoriteRepositoryIdList = if(favoriteRepositoriesResult.isSuccess) {
+                val favoriteRepositoryIdList = if (favoriteRepositoriesResult.isSuccess) {
                     favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
                 } else {
                     emptyList()
@@ -76,6 +76,15 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
                 withContext(Dispatchers.Main) {
                     _searchRepositories.value = repositoryItems
+                }
+            } else {
+                Log.e(
+                    "SearchRepositoryFragmentViewModel",
+                    "searchRepositories error",
+                    result.exceptionOrNull()
+                )
+                withContext(Dispatchers.Main) {
+                    _searchRepositories.value = emptyList()
                 }
             }
         }
