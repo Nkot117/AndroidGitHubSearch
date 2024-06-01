@@ -59,6 +59,14 @@ class GitHubRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun deleteFavoriteRepository(repository: FavoriteRepositoryEntity) {
+        try {
+            favoriteRepositoryDao.delete(repository)
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
     
     private suspend fun deleteAllUserRepositories() {
         userRepositoryDao.deleteAll()

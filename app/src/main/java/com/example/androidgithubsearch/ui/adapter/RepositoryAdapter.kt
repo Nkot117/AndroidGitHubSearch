@@ -23,13 +23,25 @@ class RepositoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: RepositoryItem) {
             binding.repositoryItem = repositoryItem
+
             binding.root.setOnClickListener { view ->
                 val intent = WebViewActivity.createIntent(view.context, repositoryItem.url)
                 view.context.startActivity(intent)
             }
+
             binding.addFavorite.setOnClickListener {
+                binding.removeFavorite.visibility = View.VISIBLE
+                binding.addFavorite.visibility = View.GONE
                 coroutineScope.launch {
                     gitHubRepository.addFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
+                }
+            }
+
+            binding.removeFavorite.setOnClickListener {
+                binding.removeFavorite.visibility = View.GONE
+                binding.addFavorite.visibility = View.VISIBLE
+                coroutineScope.launch {
+                    gitHubRepository.deleteFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
                 }
             }
         }
