@@ -19,11 +19,10 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 ) : ViewModel() {
     private var _searchRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
     val searchRepositories: LiveData<List<RepositoryItem>> = _searchRepositories
-
-    private val searchQuery: MutableLiveData<String> = MutableLiveData()
-
     private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
     val currentPage: LiveData<Int> = _currentPage
+
+    private var searchQuery: String? = null
 
     fun clickNextPage() {
         _currentPage.value = _currentPage.value?.plus(1)
@@ -37,7 +36,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     fun clickSearchButton(query: String?) {
         query?.let{
-            searchQuery.value = it
+            searchQuery = it
             _currentPage.value = 1
             searchRepository()
         }
@@ -45,7 +44,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     private fun searchRepository() {
         viewModelScope.launch {
-            val result = searchQuery.value?.let {
+            val result = searchQuery?.let {
                 gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
             } ?: return@launch
 
