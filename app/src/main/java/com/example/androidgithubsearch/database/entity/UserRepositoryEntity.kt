@@ -2,7 +2,7 @@ package com.example.androidgithubsearch.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.androidgithubsearch.ui.adapter.RepositoryItem
+import com.example.androidgithubsearch.ui.adapter.UserRepositoryItem
 import java.util.Date
 
 @Entity
@@ -16,8 +16,8 @@ data class UserRepositoryEntity(
     val language: String,
     val star: Int,
 ) {
-    fun toRepositoryItem(favoriteIdList: List<Int>): RepositoryItem {
-        return   RepositoryItem(
+    fun toUserRepositoryItem(favoriteIdList: List<Int>): UserRepositoryItem {
+        return   UserRepositoryItem(
             id = id,
             name = name,
             url = url,

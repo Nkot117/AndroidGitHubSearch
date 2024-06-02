@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class RepositoryItem(
+data class SearchRepositoryItem(
     val id: Int,
     val name: String,
     val url: String,

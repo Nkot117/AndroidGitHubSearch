@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.repository.GitHubRepository
-import com.example.androidgithubsearch.ui.adapter.RepositoryItem
+import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ import javax.inject.Inject
 class SearchRepositoryFragmentViewModel @Inject constructor(
     val gitHubRepository: GitHubRepository,
 ) : ViewModel() {
-    private var _searchRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
-    val searchRepositories: LiveData<List<RepositoryItem>> = _searchRepositories
+    private var _searchRepositories: MutableLiveData<List<SearchRepositoryItem>> = MutableLiveData()
+    val searchRepositories: LiveData<List<SearchRepositoryItem>> = _searchRepositories
     private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
     val currentPage: LiveData<Int> = _currentPage
 
@@ -70,8 +70,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                     emptyList()
                 }
 
-                val repositoryItems: List<RepositoryItem> = repositoryList.map {
-                    it.toRepositoryItem(favoriteRepositoryIdList)
+                val repositoryItems: List<SearchRepositoryItem> = repositoryList.map {
+                    it.toSearchRepositoryItem(favoriteRepositoryIdList)
                 }
 
                 withContext(Dispatchers.Main) {

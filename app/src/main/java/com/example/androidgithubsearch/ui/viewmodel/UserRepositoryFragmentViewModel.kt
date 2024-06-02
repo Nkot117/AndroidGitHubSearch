@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.repository.GitHubRepository
-import com.example.androidgithubsearch.ui.adapter.RepositoryItem
+import com.example.androidgithubsearch.ui.adapter.UserRepositoryItem
 import com.example.androidgithubsearch.util.SharedPreferencesKeys
 import com.example.androidgithubsearch.util.SharedPreferencesUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +22,8 @@ class UserRepositoryFragmentViewModel @Inject constructor(
         private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
-    private val _userRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
-    val userRepositories: LiveData<List<RepositoryItem>> = _userRepositories
+    private val _userRepositories: MutableLiveData<List<UserRepositoryItem>> = MutableLiveData()
+    val userRepositories: LiveData<List<UserRepositoryItem>> = _userRepositories
 
     // アカウント名
     private val _accountName: MutableLiveData<String> = MutableLiveData("")
@@ -110,7 +110,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             // RepositoryItemに変換
             repositoryList.let { list ->
                 val repositoryItems = list.map {
-                    it.toRepositoryItem(favoriteRepositoryIdList)
+                    it.toUserRepositoryItem(favoriteRepositoryIdList)
                 }
 
                 // UIスレッドでLiveDataを更新

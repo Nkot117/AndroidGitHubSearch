@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toTopOf="@id/currentPageTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchView"
-            app:listData="@{viewModel.searchRepositories}" />
+            app:searchRepositoryListData="@{viewModel.searchRepositories}" />
 
         <ImageView
             android:id="@+id/nextPageImageView"

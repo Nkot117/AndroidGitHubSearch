@@ -6,22 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidgithubsearch.databinding.RepositoryRowItemBinding
+import com.example.androidgithubsearch.databinding.SearchRepositoryRowItemBinding
 import com.example.androidgithubsearch.repository.GitHubRepository
 import com.example.androidgithubsearch.ui.activity.WebViewActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class RepositoryAdapter(
+class SearchRepositoryAdapter(
     private val coroutineScope: CoroutineScope,
     private val gitHubRepository: GitHubRepository
-) : ListAdapter<RepositoryItem, RepositoryAdapter.RepositoryItemViewHolder>(DIFF_UTIL_ITEM_CALLBACK) {
+) : ListAdapter<SearchRepositoryItem, SearchRepositoryAdapter.RepositoryItemViewHolder>(DIFF_UTIL_ITEM_CALLBACK) {
     class RepositoryItemViewHolder(
-        private val binding: RepositoryRowItemBinding,
+        private val binding: SearchRepositoryRowItemBinding,
         private val coroutineScope: CoroutineScope,
         private val gitHubRepository: GitHubRepository
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(repositoryItem: RepositoryItem) {
+        fun bind(repositoryItem: SearchRepositoryItem) {
             binding.repositoryItem = repositoryItem
 
             binding.root.setOnClickListener { view ->
@@ -51,7 +51,7 @@ class RepositoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryItemViewHolder {
         val view =
-            RepositoryRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            SearchRepositoryRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepositoryItemViewHolder(view, coroutineScope, gitHubRepository)
     }
 
@@ -60,17 +60,17 @@ class RepositoryAdapter(
     }
 
     companion object {
-        val DIFF_UTIL_ITEM_CALLBACK = object : DiffUtil.ItemCallback<RepositoryItem>() {
+        val DIFF_UTIL_ITEM_CALLBACK = object : DiffUtil.ItemCallback<SearchRepositoryItem>() {
             override fun areItemsTheSame(
-                oldItem: RepositoryItem,
-                newItem: RepositoryItem
+                oldItem: SearchRepositoryItem,
+                newItem: SearchRepositoryItem
             ): Boolean {
                 return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
-                oldItem: RepositoryItem,
-                newItem: RepositoryItem
+                oldItem: SearchRepositoryItem,
+                newItem: SearchRepositoryItem
             ): Boolean {
                 return oldItem == newItem
             }
