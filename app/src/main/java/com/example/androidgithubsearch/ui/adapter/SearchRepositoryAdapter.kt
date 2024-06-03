@@ -28,14 +28,12 @@ class SearchRepositoryAdapter(
             binding.addFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.VISIBLE
                 binding.addFavorite.visibility = View.GONE
-                repositoryItem.isFavorite = true
                 viewModel.clickAddFavoriteButton(repositoryItem)
             }
 
             binding.removeFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.GONE
                 binding.addFavorite.visibility = View.VISIBLE
-                repositoryItem.isFavorite = false
                 viewModel.clickRemoveFavoriteButton(repositoryItem)
             }
         }
