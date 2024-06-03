@@ -1,11 +1,13 @@
 package com.example.androidgithubsearch.ui.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.repository.GitHubRepository
+import com.example.androidgithubsearch.ui.activity.WebViewActivity
 import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +42,26 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             _currentPage.value = 1
             searchRepository()
         }
+    }
+
+    fun clickAddFavoriteButton(repositoryItem: SearchRepositoryItem) {
+        viewModelScope.launch {
+            gitHubRepository.addFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
+        }
+        repositoryItem.isFavorite = true
+    }
+
+    fun clickRemoveFavoriteButton(repositoryItem: SearchRepositoryItem) {
+        viewModelScope.launch {
+            gitHubRepository.deleteFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
+        }
+        repositoryItem.isFavorite = false
+    }
+
+
+        fun clickRepositoryItem(context: Context, repositoryItem: SearchRepositoryItem) {
+        val intent = WebViewActivity.createIntent(context, repositoryItem.url)
+        context.startActivity(intent)
     }
 
     private fun searchRepository() {

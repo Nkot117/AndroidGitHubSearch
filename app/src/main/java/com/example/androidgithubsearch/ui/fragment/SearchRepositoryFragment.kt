@@ -45,7 +45,7 @@ class SearchRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = SearchRepositoryAdapter(this.lifecycleScope, viewModel.gitHubRepository)
+        val adapter = SearchRepositoryAdapter(viewModel)
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(

@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.UserRepositoryRowItemBinding
 import com.example.androidgithubsearch.ui.activity.WebViewActivity
 
-class UserRepositoryAdapter() : ListAdapter<UserRepositoryItem, UserRepositoryAdapter.RepositoryItemViewHolder>(DIFF_UTIL_ITEM_CALLBACK) {
+class UserRepositoryAdapter :
+    ListAdapter<UserRepositoryItem, UserRepositoryAdapter.RepositoryItemViewHolder>(
+        DIFF_UTIL_ITEM_CALLBACK
+    ) {
     class RepositoryItemViewHolder(
         private val binding: UserRepositoryRowItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: UserRepositoryItem) {
             binding.repositoryItem = repositoryItem
-
             binding.root.setOnClickListener { view ->
                 val intent = WebViewActivity.createIntent(view.context, repositoryItem.url)
                 view.context.startActivity(intent)
