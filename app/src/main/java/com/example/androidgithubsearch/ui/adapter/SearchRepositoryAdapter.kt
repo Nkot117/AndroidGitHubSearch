@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.SearchRepositoryRowItemBinding
-import com.example.androidgithubsearch.ui.activity.WebViewActivity
 import com.example.androidgithubsearch.ui.viewmodel.SearchRepositoryFragmentViewModel
 
 class SearchRepositoryAdapter(
@@ -22,8 +21,8 @@ class SearchRepositoryAdapter(
         fun bind(repositoryItem: SearchRepositoryItem) {
             binding.repositoryItem = repositoryItem
 
-            binding.root.setOnClickListener { view ->
-                viewModel.clickRepositoryItem(view.context, repositoryItem)
+            binding.root.setOnClickListener {
+                viewModel.clickRepositoryItem(repositoryItem)
             }
 
             binding.addFavorite.setOnClickListener {
