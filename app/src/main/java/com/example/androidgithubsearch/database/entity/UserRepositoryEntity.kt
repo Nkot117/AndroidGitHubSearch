@@ -16,8 +16,8 @@ data class UserRepositoryEntity(
     val language: String,
     val star: Int,
 ) {
-    fun toUserRepositoryItem(favoriteIdList: List<Int>): UserRepositoryItem {
-        return   UserRepositoryItem(
+    fun toUserRepositoryItem(): UserRepositoryItem {
+        return UserRepositoryItem(
             id = id,
             name = name,
             url = url,
@@ -26,7 +26,6 @@ data class UserRepositoryEntity(
             language = language,
             star = star,
             avatar = avatar,
-            isFavorite = favoriteIdList.contains(id)
         )
     }
 }

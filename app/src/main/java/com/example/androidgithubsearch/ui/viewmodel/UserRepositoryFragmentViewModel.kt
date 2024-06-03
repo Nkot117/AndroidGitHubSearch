@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.repository.GitHubRepository
+import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
 import com.example.androidgithubsearch.ui.adapter.UserRepositoryItem
 import com.example.androidgithubsearch.util.SharedPreferencesKeys
 import com.example.androidgithubsearch.util.SharedPreferencesUtil
@@ -18,8 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRepositoryFragmentViewModel @Inject constructor(
-        val gitHubRepository: GitHubRepository,
-        private val preferencesUtil: SharedPreferencesUtil
+    val gitHubRepository: GitHubRepository,
+    private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
     private val _userRepositories: MutableLiveData<List<UserRepositoryItem>> = MutableLiveData()
@@ -49,6 +50,9 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _moveUrlPage: MutableLiveData<String> = MutableLiveData()
+    val moveUrlPage: LiveData<String> = _moveUrlPage
+
     init {
         _isLoading.value = true
         _accountName.value = getUsername()
@@ -72,6 +76,10 @@ class UserRepositoryFragmentViewModel @Inject constructor(
 
     fun showAccountSettingDialogComplete() {
         _showAccountSettingDialog.value = false
+    }
+
+    fun clickRepositoryItem(repositoryItem: UserRepositoryItem) {
+        _moveUrlPage.value = repositoryItem.url
     }
 
     private fun setUsername(username: String) {
@@ -101,7 +109,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             }
 
             val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
-            val favoriteRepositoryIdList = if(favoriteRepositoriesResult.isSuccess) {
+            val favoriteRepositoryIdList = if (favoriteRepositoriesResult.isSuccess) {
                 favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
             } else {
                 emptyList()
@@ -110,7 +118,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             // RepositoryItemに変換
             repositoryList.let { list ->
                 val repositoryItems = list.map {
-                    it.toUserRepositoryItem(favoriteRepositoryIdList)
+                    it.toUserRepositoryItem()
                 }
 
                 // UIスレッドでLiveDataを更新

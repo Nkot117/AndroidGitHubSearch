@@ -7,19 +7,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.UserRepositoryRowItemBinding
 import com.example.androidgithubsearch.ui.activity.WebViewActivity
+import com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel
 
-class UserRepositoryAdapter :
+class UserRepositoryAdapter(private val viewModel: UserRepositoryFragmentViewModel) :
     ListAdapter<UserRepositoryItem, UserRepositoryAdapter.RepositoryItemViewHolder>(
         DIFF_UTIL_ITEM_CALLBACK
     ) {
     class RepositoryItemViewHolder(
         private val binding: UserRepositoryRowItemBinding,
+        private val viewModel: UserRepositoryFragmentViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: UserRepositoryItem) {
             binding.repositoryItem = repositoryItem
-            binding.root.setOnClickListener { view ->
-                val intent = WebViewActivity.createIntent(view.context, repositoryItem.url)
-                view.context.startActivity(intent)
+            binding.root.setOnClickListener {
+                viewModel.clickRepositoryItem(repositoryItem)
             }
         }
     }
@@ -27,7 +28,7 @@ class UserRepositoryAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryItemViewHolder {
         val view =
             UserRepositoryRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RepositoryItemViewHolder(view)
+        return RepositoryItemViewHolder(view, viewModel)
     }
 
     override fun onBindViewHolder(holder: RepositoryItemViewHolder, position: Int) {
