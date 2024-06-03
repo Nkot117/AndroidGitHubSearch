@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.repository.GitHubRepository
-import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
 import com.example.androidgithubsearch.ui.adapter.UserRepositoryItem
 import com.example.androidgithubsearch.util.SharedPreferencesKeys
 import com.example.androidgithubsearch.util.SharedPreferencesUtil
@@ -106,13 +105,6 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                     _isLoading.value = false
                 }
                 return
-            }
-
-            val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
-            val favoriteRepositoryIdList = if (favoriteRepositoriesResult.isSuccess) {
-                favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
-            } else {
-                emptyList()
             }
 
             // RepositoryItemに変換
