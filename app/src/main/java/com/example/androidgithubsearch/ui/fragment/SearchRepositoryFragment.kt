@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentSearchRepositoryBinding
-import com.example.androidgithubsearch.ui.adapter.RepositoryAdapter
+import com.example.androidgithubsearch.ui.activity.WebViewActivity
+import com.example.androidgithubsearch.ui.adapter.SearchRepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.SearchRepositoryFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +45,7 @@ class SearchRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = RepositoryAdapter(this.lifecycleScope, viewModel.gitHubRepository)
+        val adapter = SearchRepositoryAdapter(viewModel)
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(
@@ -55,14 +55,18 @@ class SearchRepositoryFragment : Fragment() {
                 )
             )
         }
+
+        viewModel.moveUrlPage.observe(viewLifecycleOwner) { url ->
+            url?.let {
+                val intent = WebViewActivity.createIntent(binding.root.context, it)
+                binding.root.context.startActivity(intent)
+            }
+        }
     }
 
     private fun setSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query.isNullOrEmpty()) {
-                    return false
-                }
                 viewModel.clickSearchButton(query)
 
                 // キーボードを閉じる
