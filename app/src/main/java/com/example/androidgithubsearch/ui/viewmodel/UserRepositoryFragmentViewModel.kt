@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRepositoryFragmentViewModel @Inject constructor(
-    val gitHubRepository: GitHubRepository,
+    private val gitHubRepository: GitHubRepository,
     private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト

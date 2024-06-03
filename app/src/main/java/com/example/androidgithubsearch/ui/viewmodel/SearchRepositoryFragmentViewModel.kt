@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchRepositoryFragmentViewModel @Inject constructor(
-    val gitHubRepository: GitHubRepository,
+    private val gitHubRepository: GitHubRepository,
 ) : ViewModel() {
     private var _searchRepositories: MutableLiveData<List<SearchRepositoryItem>> = MutableLiveData()
     val searchRepositories: LiveData<List<SearchRepositoryItem>> = _searchRepositories
