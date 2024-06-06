@@ -5,11 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
+import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,25 +49,6 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         }
     }
 
-    fun clickAddFavoriteButton(repositoryItem: SearchRepositoryItem) {
-        viewModelScope.launch {
-            gitHubRepository.addFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
-        }
-        repositoryItem.isFavorite = true
-    }
-
-    fun clickRemoveFavoriteButton(repositoryItem: SearchRepositoryItem) {
-        viewModelScope.launch {
-            gitHubRepository.deleteFavoriteRepository(repositoryItem.toFavoriteRepositoryEntity())
-        }
-        repositoryItem.isFavorite = false
-    }
-
-
-    fun clickRepositoryItem(repositoryItem: SearchRepositoryItem) {
-        _moveUrlPage.value = repositoryItem.url
-    }
-
     private fun searchRepository() {
         viewModelScope.launch {
             val result = searchQuery?.let {
@@ -92,7 +78,10 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                 }
 
                 val repositoryItems: List<SearchRepositoryItem> = repositoryList.map {
-                    it.toSearchRepositoryItem(favoriteRepositoryIdList)
+                    createSearchRepositoryItem(
+                        it,
+                        favoriteRepositoryIdList.contains(it.id)
+                    )
                 }
 
                 withContext(Dispatchers.Main) {
@@ -109,5 +98,49 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun dateStringToDate(dateString: String): Date {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        return formatter.parse(dateString)
+    }
+
+    private fun createSearchRepositoryItem(repositoryResponse: GitHubSearchRepositoryResponse.Item, isFavorite: Boolean): SearchRepositoryItem {
+        return SearchRepositoryItem(
+            id = repositoryResponse.id,
+            name = repositoryResponse.name,
+            url = repositoryResponse.url,
+            created = dateStringToDate(repositoryResponse.created),
+            updated = dateStringToDate(repositoryResponse.updated),
+            language = repositoryResponse.language ?: "Unknown",
+            star = repositoryResponse.star,
+            avatar = repositoryResponse.owner.avatar,
+            isFavorite = isFavorite,
+            clickAddFavoriteAction = {
+                viewModelScope.launch {
+                    gitHubRepository.addFavoriteRepository(
+                        FavoriteRepositoryEntity(
+                            id = repositoryResponse.id,
+                            name = repositoryResponse.name,
+                            url = repositoryResponse.url,
+                        )
+                    )
+                }
+            },
+            clickRemoveFavoriteAction = {
+                viewModelScope.launch {
+                    gitHubRepository.deleteFavoriteRepository(
+                        FavoriteRepositoryEntity(
+                            id = repositoryResponse.id,
+                            name = repositoryResponse.name,
+                            url = repositoryResponse.url,
+                        )
+                    )
+                }
+            },
+            clickItemAction = {
+                _moveUrlPage.value = repositoryResponse.url
+            }
+        )
     }
 }

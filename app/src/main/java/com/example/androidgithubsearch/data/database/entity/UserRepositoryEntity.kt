@@ -15,17 +15,4 @@ data class UserRepositoryEntity(
     val updated: Date,
     val language: String,
     val star: Int,
-) {
-    fun toUserRepositoryItem(): UserRepositoryItem {
-        return UserRepositoryItem(
-            id = id,
-            name = name,
-            url = url,
-            created = created,
-            updated = updated,
-            language = language,
-            star = star,
-            avatar = avatar,
-        )
-    }
-}
+)

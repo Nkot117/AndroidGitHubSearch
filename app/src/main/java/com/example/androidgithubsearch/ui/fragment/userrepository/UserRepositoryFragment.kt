@@ -55,7 +55,7 @@ class UserRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = UserRepositoryAdapter(viewModel)
+        val adapter = UserRepositoryAdapter()
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(

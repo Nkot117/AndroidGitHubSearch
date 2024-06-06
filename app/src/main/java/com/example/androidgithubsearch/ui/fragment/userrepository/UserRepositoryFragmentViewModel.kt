@@ -109,7 +109,7 @@ class UserRepositoryFragmentViewModel @Inject constructor(
             // RepositoryItemに変換
             repositoryList.let { list ->
                 val repositoryItems = list.map {
-                    it.toUserRepositoryItem()
+                    createSearchRepositoryItem(it)
                 }
 
                 // UIスレッドでLiveDataを更新
@@ -122,5 +122,22 @@ class UserRepositoryFragmentViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun createSearchRepositoryItem(repository: UserRepositoryEntity
+    ): UserRepositoryItem {
+        return UserRepositoryItem(
+            id = repository.id,
+            name =  repository.name,
+            url =  repository.url,
+            created =  repository.created,
+            updated =  repository.updated,
+            language =  repository.language,
+            star =  repository.star,
+            avatar =  repository.avatar,
+            clickItemAction = {
+                _moveUrlPage.value = repository.url
+            }
+        )
     }
 }

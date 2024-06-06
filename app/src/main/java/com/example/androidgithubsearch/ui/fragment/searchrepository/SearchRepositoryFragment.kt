@@ -43,7 +43,7 @@ class SearchRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = SearchRepositoryAdapter(viewModel)
+        val adapter = SearchRepositoryAdapter()
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(

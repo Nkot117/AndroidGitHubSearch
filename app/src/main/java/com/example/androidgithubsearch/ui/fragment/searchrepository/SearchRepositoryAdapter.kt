@@ -8,32 +8,30 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.SearchRepositoryRowItemBinding
 
-class SearchRepositoryAdapter(
-    private val viewModel: SearchRepositoryFragmentViewModel
-) : ListAdapter<SearchRepositoryItem, SearchRepositoryAdapter.RepositoryItemViewHolder>(
-    DIFF_UTIL_ITEM_CALLBACK
-) {
+class SearchRepositoryAdapter :
+    ListAdapter<SearchRepositoryItem, SearchRepositoryAdapter.RepositoryItemViewHolder>(
+        DIFF_UTIL_ITEM_CALLBACK
+    ) {
     class RepositoryItemViewHolder(
         private val binding: SearchRepositoryRowItemBinding,
-        private val viewModel: SearchRepositoryFragmentViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: SearchRepositoryItem) {
             binding.repositoryItem = repositoryItem
 
             binding.root.setOnClickListener {
-                viewModel.clickRepositoryItem(repositoryItem)
+                repositoryItem.clickItemAction()
             }
 
             binding.addFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.VISIBLE
                 binding.addFavorite.visibility = View.GONE
-                viewModel.clickAddFavoriteButton(repositoryItem)
+                repositoryItem.clickAddFavoriteAction()
             }
 
             binding.removeFavorite.setOnClickListener {
                 binding.removeFavorite.visibility = View.GONE
                 binding.addFavorite.visibility = View.VISIBLE
-                viewModel.clickRemoveFavoriteButton(repositoryItem)
+                repositoryItem.clickRemoveFavoriteAction()
             }
         }
     }
@@ -45,7 +43,7 @@ class SearchRepositoryAdapter(
                 parent,
                 false
             )
-        return RepositoryItemViewHolder(view, viewModel)
+        return RepositoryItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RepositoryItemViewHolder, position: Int) {

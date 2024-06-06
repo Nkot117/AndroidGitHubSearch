@@ -31,24 +31,5 @@ data class GitHubSearchRepositoryResponse(
             @Json(name = "avatar_url")
             val avatar: String
         )
-
-        fun toSearchRepositoryItem(favoriteIdList: List<Int>): SearchRepositoryItem {
-            return SearchRepositoryItem(
-                id = id,
-                name = name,
-                url = url,
-                created = dateStringToDate(created),
-                updated = dateStringToDate(updated),
-                language = language ?: "Unknown",
-                star = star,
-                avatar = owner.avatar,
-                isFavorite = favoriteIdList.contains(id)
-            )
-        }
-
-        private fun dateStringToDate(dateString: String): Date {
-            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            return formatter.parse(dateString)
-        }
     }
 }
