@@ -1,6 +1,6 @@
-package com.example.androidgithubsearch.api
+package com.example.androidgithubsearch.data.api
 
-import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
+import com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryItem
 import com.squareup.moshi.Json
 import java.text.SimpleDateFormat
 import java.util.Date

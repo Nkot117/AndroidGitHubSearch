@@ -1,10 +1,10 @@
-package com.example.androidgithubsearch.database.dao
+package com.example.androidgithubsearch.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.androidgithubsearch.database.entity.FavoriteRepositoryEntity
+import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 
 @Dao
 interface FavoriteRepositoryDao {

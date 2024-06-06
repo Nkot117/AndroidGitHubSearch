@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.adapter
+package com.example.androidgithubsearch.ui.fragment.searchrepository
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidgithubsearch.databinding.SearchRepositoryRowItemBinding
-import com.example.androidgithubsearch.ui.viewmodel.SearchRepositoryFragmentViewModel
 
 class SearchRepositoryAdapter(
     private val viewModel: SearchRepositoryFragmentViewModel

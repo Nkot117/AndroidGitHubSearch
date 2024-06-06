@@ -1,14 +1,14 @@
-package com.example.androidgithubsearch.ui.binding
+package com.example.androidgithubsearch.ui.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidgithubsearch.R
-import com.example.androidgithubsearch.ui.adapter.SearchRepositoryAdapter
-import com.example.androidgithubsearch.ui.adapter.SearchRepositoryItem
-import com.example.androidgithubsearch.ui.adapter.UserRepositoryAdapter
-import com.example.androidgithubsearch.ui.adapter.UserRepositoryItem
+import com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryAdapter
+import com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryItem
+import com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryAdapter
+import com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryItem
 
 
 object BindingAdapters {

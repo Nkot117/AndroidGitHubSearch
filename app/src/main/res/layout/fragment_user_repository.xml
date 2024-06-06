@@ -9,14 +9,14 @@
 
         <variable
             name="viewModel"
-            type="com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel" />
+            type="com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="10sp"
-        tools:context=".ui.fragment.UserRepositoryFragment">
+        tools:context=".ui.fragment.userrepository.UserRepositoryFragment">
 
         <ImageView
             android:id="@+id/avatar"

@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.util
+package com.example.androidgithubsearch.data.sharedpreferences
 
 import android.content.SharedPreferences
 import javax.inject.Inject

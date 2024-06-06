@@ -9,13 +9,13 @@
 
         <variable
             name="viewModel"
-            type="com.example.androidgithubsearch.ui.viewmodel.SearchRepositoryFragmentViewModel" />
+            type="com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.SearchRepositoryFragment">
+        tools:context=".ui.fragment.searchrepository.SearchRepositoryFragment">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"

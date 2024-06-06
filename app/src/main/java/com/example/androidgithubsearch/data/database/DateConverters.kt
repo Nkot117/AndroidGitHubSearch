@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.database
+package com.example.androidgithubsearch.data.database
 
 import androidx.room.TypeConverter
 import java.util.Date

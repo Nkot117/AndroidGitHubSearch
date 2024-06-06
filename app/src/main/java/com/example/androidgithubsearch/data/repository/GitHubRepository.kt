@@ -1,11 +1,11 @@
-package com.example.androidgithubsearch.repository
+package com.example.androidgithubsearch.data.repository
 
-import com.example.androidgithubsearch.api.GitHubApiService
-import com.example.androidgithubsearch.database.dao.FavoriteRepositoryDao
-import com.example.androidgithubsearch.database.dao.UserRepositoryDao
-import com.example.androidgithubsearch.api.GitHubSearchRepositoryResponse
-import com.example.androidgithubsearch.database.entity.FavoriteRepositoryEntity
-import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
+import com.example.androidgithubsearch.data.api.GitHubApiService
+import com.example.androidgithubsearch.data.database.dao.FavoriteRepositoryDao
+import com.example.androidgithubsearch.data.database.dao.UserRepositoryDao
+import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
+import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
+import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
 import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(

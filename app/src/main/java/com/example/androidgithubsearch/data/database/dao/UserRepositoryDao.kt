@@ -1,9 +1,9 @@
-package com.example.androidgithubsearch.database.dao
+package com.example.androidgithubsearch.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
+import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
 
 @Dao
 interface UserRepositoryDao {

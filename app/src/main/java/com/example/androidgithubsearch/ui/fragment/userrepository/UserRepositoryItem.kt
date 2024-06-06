@@ -1,11 +1,11 @@
-package com.example.androidgithubsearch.ui.adapter
+package com.example.androidgithubsearch.ui.fragment.userrepository
 
-import com.example.androidgithubsearch.database.entity.FavoriteRepositoryEntity
+import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class SearchRepositoryItem(
+data class UserRepositoryItem(
     val id: Int,
     val name: String,
     val url: String,
@@ -13,8 +13,7 @@ data class SearchRepositoryItem(
     val updated: Date,
     val language: String?,
     val star: Int,
-    val avatar: String,
-    var isFavorite: Boolean
+    val avatar: String
 ) {
     fun formatUpdatedDate(): String {
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
