@@ -9,9 +9,7 @@ import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,59 +51,43 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             val result = searchQuery?.let {
                 gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
-            } ?: return@launch
+            }
 
-            if (result.isSuccess) {
-                val data = result.getOrNull() ?: return@launch
-
-                val totalCount = data.totalCount
-                Log.d("SearchRepositoryFragmentViewModel", "totalCount: $totalCount")
-
-                val repositoryList = data.items
-
-                if (repositoryList.isEmpty()) {
-                    withContext(Dispatchers.Main) {
-                        _searchRepositories.value = emptyList()
-                    }
-                    return@launch
-                }
-
+            if (result?.isSuccess == true) {
+                val data = result.getOrNull()
+                val repositoryList = data?.items ?: emptyList()
                 val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
-                val favoriteRepositoryIdList = if (favoriteRepositoriesResult.isSuccess) {
+                val favoriteRepositoryIdList =
                     favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
-                } else {
-                    emptyList()
-                }
 
-                val repositoryItems: List<SearchRepositoryItem> = repositoryList.map {
+
+                val repositoryItems = repositoryList.map {
                     createSearchRepositoryItem(
                         it,
                         favoriteRepositoryIdList.contains(it.id)
                     )
                 }
-
-                withContext(Dispatchers.Main) {
-                    _searchRepositories.value = repositoryItems
-                }
+                _searchRepositories.value = repositoryItems
             } else {
                 Log.e(
                     "SearchRepositoryFragmentViewModel",
                     "searchRepositories error",
-                    result.exceptionOrNull()
+                    result?.exceptionOrNull()
                 )
-                withContext(Dispatchers.Main) {
-                    _searchRepositories.value = emptyList()
-                }
+                _searchRepositories.value = emptyList()
             }
         }
     }
 
     private fun dateStringToDate(dateString: String): Date {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-        return formatter.parse(dateString)
+        return formatter.parse(dateString) ?: Date()
     }
 
-    private fun createSearchRepositoryItem(repositoryResponse: GitHubSearchRepositoryResponse.Item, isFavorite: Boolean): SearchRepositoryItem {
+    private fun createSearchRepositoryItem(
+        repositoryResponse: GitHubSearchRepositoryResponse.Item,
+        isFavorite: Boolean
+    ): SearchRepositoryItem {
         return SearchRepositoryItem(
             id = repositoryResponse.id,
             name = repositoryResponse.name,

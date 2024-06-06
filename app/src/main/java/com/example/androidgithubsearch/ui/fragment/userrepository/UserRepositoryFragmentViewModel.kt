@@ -12,7 +12,6 @@ import com.example.androidgithubsearch.data.sharedpreferences.SharedPreferencesU
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -76,10 +75,6 @@ class UserRepositoryFragmentViewModel @Inject constructor(
         _showAccountSettingDialog.value = false
     }
 
-    fun clickRepositoryItem(repositoryItem: UserRepositoryItem) {
-        _moveUrlPage.value = repositoryItem.url
-    }
-
     private fun setUsername(username: String) {
         _accountName.value = username
         preferencesUtil.savePref(SharedPreferencesKeys.USER_NAME, username)
@@ -90,51 +85,42 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     }
 
     private suspend fun getUserRepositories() {
-        val result = gitHubRepository.getUserRepositories()
+        viewModelScope.launch {
+            val result = gitHubRepository.getUserRepositories()
 
-        if (result.isSuccess) {
-            val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
+            if (result.isSuccess) {
+                val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
 
-            if (repositoryList.isNullOrEmpty()) {
-                withContext(Dispatchers.Main) {
-                    _repositoryCount.value = "0 Repositories"
-                    _avatarUrl.value = null
-                    _userRepositories.value = emptyList()
-                    _isRepositoryListVisible.value = false
-                    _isLoading.value = false
-                }
-                return
-            }
+                val avatar = if (repositoryList.isNullOrEmpty()) null else repositoryList[0].avatar
 
-            // RepositoryItemに変換
-            repositoryList.let { list ->
-                val repositoryItems = list.map {
-                    createSearchRepositoryItem(it)
-                }
+                // RepositoryItemに変換
+                repositoryList.let { list ->
+                    val repositoryItems = list?.map {
+                        createSearchRepositoryItem(it)
+                    } ?: emptyList()
 
-                // UIスレッドでLiveDataを更新
-                withContext(Dispatchers.Main) {
-                    _repositoryCount.value = "${repositoryList.size} Repositories"
-                    _avatarUrl.value = repositoryList[0].avatar
+                    _repositoryCount.value = "${repositoryList?.size ?: 0} Repositories"
+                    _avatarUrl.value = avatar
                     _userRepositories.value = repositoryItems
-                    _isRepositoryListVisible.value = true
+                    _isRepositoryListVisible.value = repositoryList?.isNotEmpty() ?: false
                     _isLoading.value = false
                 }
             }
         }
     }
 
-    private fun createSearchRepositoryItem(repository: UserRepositoryEntity
+    private fun createSearchRepositoryItem(
+        repository: UserRepositoryEntity
     ): UserRepositoryItem {
         return UserRepositoryItem(
             id = repository.id,
-            name =  repository.name,
-            url =  repository.url,
-            created =  repository.created,
-            updated =  repository.updated,
-            language =  repository.language,
-            star =  repository.star,
-            avatar =  repository.avatar,
+            name = repository.name,
+            url = repository.url,
+            created = repository.created,
+            updated = repository.updated,
+            language = repository.language,
+            star = repository.star,
+            avatar = repository.avatar,
             clickItemAction = {
                 _moveUrlPage.value = repository.url
             }
