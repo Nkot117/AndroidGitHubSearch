@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.fragment.searchrepository
+package com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter
 
 import java.text.SimpleDateFormat
 import java.util.Date

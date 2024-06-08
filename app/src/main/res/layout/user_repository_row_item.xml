@@ -9,7 +9,7 @@
 
         <variable
             name="repositoryItem"
-            type="com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryItem" />
+            type="com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

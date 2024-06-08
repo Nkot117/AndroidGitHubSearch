@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.fragment.userrepository
+package com.example.androidgithubsearch.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.FragmentUserRepositoryBinding
 import com.example.androidgithubsearch.ui.activity.WebViewActivity
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryAdapter
+import com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

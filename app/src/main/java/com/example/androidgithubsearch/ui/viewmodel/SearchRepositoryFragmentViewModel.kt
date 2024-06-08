@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.fragment.searchrepository
+package com.example.androidgithubsearch.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
+import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

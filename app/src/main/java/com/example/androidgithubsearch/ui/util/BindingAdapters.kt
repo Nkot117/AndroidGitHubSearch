@@ -5,10 +5,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidgithubsearch.R
-import com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryAdapter
-import com.example.androidgithubsearch.ui.fragment.searchrepository.SearchRepositoryItem
-import com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryAdapter
-import com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryItem
+import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryAdapter
+import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryAdapter
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryItem
 
 
 object BindingAdapters {

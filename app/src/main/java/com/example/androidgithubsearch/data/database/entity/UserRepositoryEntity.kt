@@ -2,7 +2,6 @@ package com.example.androidgithubsearch.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.androidgithubsearch.ui.fragment.userrepository.UserRepositoryItem
 import java.util.Date
 
 @Entity

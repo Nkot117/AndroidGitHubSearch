@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.fragment.userrepository
+package com.example.androidgithubsearch.ui.adapter.userrepositoryadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

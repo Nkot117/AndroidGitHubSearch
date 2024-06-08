@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.ui.fragment.userrepository
+package com.example.androidgithubsearch.ui.viewmodel
 
 
 import androidx.lifecycle.LiveData
@@ -9,6 +9,7 @@ import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
 import com.example.androidgithubsearch.data.sharedpreferences.SharedPreferencesKeys
 import com.example.androidgithubsearch.data.sharedpreferences.SharedPreferencesUtil
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
