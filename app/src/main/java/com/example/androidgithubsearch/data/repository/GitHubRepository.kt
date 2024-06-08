@@ -3,15 +3,15 @@ package com.example.androidgithubsearch.data.repository
 import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
-import com.example.androidgithubsearch.data.repository.localdatasource.GitHubRemoteDataSource
-import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubLocalDataSource
+import com.example.androidgithubsearch.data.repository.localdatasource.GitHubLocalDataSourceInterface
+import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubRemoteDataSourceInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(
-    private val gitHubRemoteDataSource: GitHubRemoteDataSource,
-    private val gitHubLocalDataSource: GitHubLocalDataSource
+    private val gitHubRemoteDataSource: GitHubRemoteDataSourceInterface,
+    private val gitHubLocalDataSource: GitHubLocalDataSourceInterface
 ) {
     suspend fun fetchAndSaveUserRepositories(username: String) {
         return withContext(Dispatchers.IO) {

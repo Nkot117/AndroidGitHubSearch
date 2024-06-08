@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch.data.repository.remotedatasource
+package com.example.androidgithubsearch.data.repository.localdatasource
 
 import com.example.androidgithubsearch.data.database.dao.FavoriteRepositoryDao
 import com.example.androidgithubsearch.data.database.dao.UserRepositoryDao
@@ -9,29 +9,29 @@ import javax.inject.Inject
 class GitHubLocalDataSource @Inject constructor(
     private val userRepositoryDao: UserRepositoryDao,
     private val favoriteRepositoryDao: FavoriteRepositoryDao
-) {
+) : GitHubLocalDataSourceInterface {
 
-    suspend fun insertUserRepository(userRepositoryEntity: UserRepositoryEntity) {
+    override suspend fun insertUserRepository(userRepositoryEntity: UserRepositoryEntity) {
         userRepositoryDao.insert(userRepositoryEntity)
     }
 
-    suspend fun getAllUserRepositories(): List<UserRepositoryEntity> {
+    override suspend fun getAllUserRepositories(): List<UserRepositoryEntity> {
         return userRepositoryDao.getAll()
     }
 
-    suspend fun deleteAllUserRepositories() {
+    override suspend fun deleteAllUserRepositories() {
         userRepositoryDao.deleteAll()
     }
 
-    suspend fun insertFavoriteRepository(favoriteRepositoryEntity: FavoriteRepositoryEntity) {
+    override suspend fun insertFavoriteRepository(favoriteRepositoryEntity: FavoriteRepositoryEntity) {
         favoriteRepositoryDao.insert(favoriteRepositoryEntity)
     }
 
-    suspend fun getAllFavoriteRepositories(): List<FavoriteRepositoryEntity> {
+    override suspend fun getAllFavoriteRepositories(): List<FavoriteRepositoryEntity> {
         return favoriteRepositoryDao.getAll()
     }
 
-    suspend fun deleteFavoriteRepository(favoriteRepositoryEntity: FavoriteRepositoryEntity) {
+    override suspend fun deleteFavoriteRepository(favoriteRepositoryEntity: FavoriteRepositoryEntity) {
         favoriteRepositoryDao.delete(favoriteRepositoryEntity)
     }
 }
