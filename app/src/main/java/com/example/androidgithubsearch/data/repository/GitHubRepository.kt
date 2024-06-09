@@ -1,5 +1,6 @@
 package com.example.androidgithubsearch.data.repository
 
+import android.util.Log
 import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
@@ -22,7 +23,7 @@ class GitHubRepository @Inject constructor(
                     gitHubLocalDataSource.insertUserRepository(it)
                 }
             } catch (e: Exception) {
-                println("Error: ${e.message}")
+                Log.e("GitHubRepository", "Error fetchAndSaveUserRepositories: ${e.message}")
             }
         }
     }
@@ -32,6 +33,7 @@ class GitHubRepository @Inject constructor(
             try {
                 Result.success(gitHubLocalDataSource.getAllUserRepositories())
             } catch (e: Exception) {
+                Log.e("GitHubRepository", "Error getUserRepositories: ${e.message}")
                 Result.failure(e)
             }
         }
@@ -45,6 +47,7 @@ class GitHubRepository @Inject constructor(
             try {
                 Result.success(gitHubRemoteDataSource.searchRepositories(query, page))
             } catch (e: Exception) {
+                Log.e("GitHubRepository", "Error searchRepositories: ${e.message}")
                 Result.failure(e)
             }
         }
@@ -55,7 +58,7 @@ class GitHubRepository @Inject constructor(
             try {
                 gitHubLocalDataSource.insertFavoriteRepository(repository)
             } catch (e: Exception) {
-                println("Error: ${e.message}")
+                Log.e("GitHubRepository", "Error addFavoriteRepository: ${e.message}")
             }
         }
     }
@@ -65,6 +68,7 @@ class GitHubRepository @Inject constructor(
             try {
                 Result.success(gitHubLocalDataSource.getAllFavoriteRepositories())
             } catch (e: Exception) {
+                Log.e("GitHubRepository", "Error getFavoriteRepositories: ${e.message}")
                 Result.failure(e)
             }
         }
@@ -75,7 +79,7 @@ class GitHubRepository @Inject constructor(
             try {
                 gitHubLocalDataSource.deleteFavoriteRepository(repository)
             } catch (e: Exception) {
-                println("Error: ${e.message}")
+                Log.e("GitHubRepository", "Error deleteFavoriteRepository: ${e.message}")
             }
         }
     }
