@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentSearchRepositoryBinding
 import com.example.androidgithubsearch.ui.activity.WebViewActivity
-import com.example.androidgithubsearch.ui.adapter.SearchRepositoryAdapter
+import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.SearchRepositoryFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +45,7 @@ class SearchRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = SearchRepositoryAdapter(viewModel)
+        val adapter = SearchRepositoryAdapter()
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(
