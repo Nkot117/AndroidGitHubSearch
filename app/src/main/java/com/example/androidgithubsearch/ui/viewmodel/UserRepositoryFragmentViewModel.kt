@@ -5,25 +5,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidgithubsearch.database.entity.UserRepositoryEntity
-import com.example.androidgithubsearch.repository.GitHubRepository
-import com.example.androidgithubsearch.ui.adapter.RepositoryItem
-import com.example.androidgithubsearch.util.SharedPreferencesKeys
-import com.example.androidgithubsearch.util.SharedPreferencesUtil
+import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
+import com.example.androidgithubsearch.data.repository.GitHubRepository
+import com.example.androidgithubsearch.data.sharedpreferences.SharedPreferencesKeys
+import com.example.androidgithubsearch.data.sharedpreferences.SharedPreferencesUtil
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class UserRepositoryFragmentViewModel @Inject constructor(
-        private val gitHubRepository: GitHubRepository,
-        private val preferencesUtil: SharedPreferencesUtil
+    private val gitHubRepository: GitHubRepository,
+    private val preferencesUtil: SharedPreferencesUtil
 ) : ViewModel() {
     // リスト表示するリポジトリリスト
-    private val _userRepositories: MutableLiveData<List<RepositoryItem>> = MutableLiveData()
-    val userRepositories: LiveData<List<RepositoryItem>> = _userRepositories
+    private val _userRepositories: MutableLiveData<List<UserRepositoryItem>> = MutableLiveData()
+    val userRepositories: LiveData<List<UserRepositoryItem>> = _userRepositories
 
     // アカウント名
     private val _accountName: MutableLiveData<String> = MutableLiveData("")
@@ -48,6 +47,9 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     // ローディングの状態
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _moveUrlPage: MutableLiveData<String> = MutableLiveData()
+    val moveUrlPage: LiveData<String> = _moveUrlPage
 
     init {
         _isLoading.value = true
@@ -84,45 +86,45 @@ class UserRepositoryFragmentViewModel @Inject constructor(
     }
 
     private suspend fun getUserRepositories() {
-        val result = gitHubRepository.getUserRepositories()
+        viewModelScope.launch {
+            val result = gitHubRepository.getUserRepositories()
 
-        if (result.isSuccess) {
-            val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
+            if (result.isSuccess) {
+                val repositoryList: List<UserRepositoryEntity>? = result.getOrNull()
 
-            if (repositoryList.isNullOrEmpty()) {
-                withContext(Dispatchers.Main) {
-                    _repositoryCount.value = "0 Repositories"
-                    _avatarUrl.value = null
-                    _userRepositories.value = emptyList()
-                    _isRepositoryListVisible.value = false
-                    _isLoading.value = false
-                }
-                return
-            }
+                val avatar = if (repositoryList.isNullOrEmpty()) null else repositoryList[0].avatar
 
-            // RepositoryItemに変換
-            repositoryList.let { list ->
-                val repositoryItems = list.map {
-                    RepositoryItem(
-                            name = it.name,
-                            url = it.url,
-                            created = it.created,
-                            updated = it.updated,
-                            language = it.language,
-                            star = it.star,
-                            avatar = it.avatar
-                    )
-                }
+                // RepositoryItemに変換
+                repositoryList.let { list ->
+                    val repositoryItems = list?.map {
+                        createSearchRepositoryItem(it)
+                    } ?: emptyList()
 
-                // UIスレッドでLiveDataを更新
-                withContext(Dispatchers.Main) {
-                    _repositoryCount.value = "${repositoryList.size} Repositories"
-                    _avatarUrl.value = repositoryList[0].avatar
+                    _repositoryCount.value = "${repositoryList?.size ?: 0} Repositories"
+                    _avatarUrl.value = avatar
                     _userRepositories.value = repositoryItems
-                    _isRepositoryListVisible.value = true
+                    _isRepositoryListVisible.value = repositoryList?.isNotEmpty() ?: false
                     _isLoading.value = false
                 }
             }
         }
+    }
+
+    private fun createSearchRepositoryItem(
+        repository: UserRepositoryEntity
+    ): UserRepositoryItem {
+        return UserRepositoryItem(
+            id = repository.id,
+            name = repository.name,
+            url = repository.url,
+            created = repository.created,
+            updated = repository.updated,
+            language = repository.language,
+            star = repository.star,
+            avatar = repository.avatar,
+            clickItemAction = {
+                _moveUrlPage.value = repository.url
+            }
+        )
     }
 }

@@ -1,8 +1,7 @@
-package com.example.androidgithubsearch.database.entity
+package com.example.androidgithubsearch.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
 import java.util.Date
 
 @Entity

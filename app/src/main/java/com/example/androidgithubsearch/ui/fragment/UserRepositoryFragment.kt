@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.R
 import com.example.androidgithubsearch.databinding.FragmentUserRepositoryBinding
-import com.example.androidgithubsearch.ui.adapter.RepositoryAdapter
+import com.example.androidgithubsearch.ui.activity.WebViewActivity
+import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.UserRepositoryFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserRepositoryFragment : Fragment() {
@@ -59,7 +57,7 @@ class UserRepositoryFragment : Fragment() {
     }
 
     private fun setRepositoryRecyclerView() {
-        val adapter = RepositoryAdapter()
+        val adapter = UserRepositoryAdapter()
         binding.repositoryRecyclerView.also {
             it.adapter = adapter
             it.addItemDecoration(
@@ -68,6 +66,13 @@ class UserRepositoryFragment : Fragment() {
                     DividerItemDecoration.VERTICAL
                 )
             )
+        }
+
+        viewModel.moveUrlPage.observe(viewLifecycleOwner) { url ->
+            url?.let {
+                val intent = WebViewActivity.createIntent(binding.root.context, it)
+                binding.root.context.startActivity(intent)
+            }
         }
     }
 

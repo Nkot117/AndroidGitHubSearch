@@ -2,8 +2,11 @@ package com.example.androidgithubsearch.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidgithubsearch.api.GitHubApiService
-import com.example.androidgithubsearch.database.AppDatabase
+import com.example.androidgithubsearch.data.api.GitHubApiService
+import com.example.androidgithubsearch.data.database.AppDatabase
+import com.example.androidgithubsearch.data.repository.GitHubRepository
+import com.example.androidgithubsearch.data.repository.localdatasource.GitHubLocalDataSource
+import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubRemoteDataSource
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -60,4 +63,11 @@ object HiltModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context) = context.getSharedPreferences("AndroidGitHubSearch", Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideGitHubRepository(
+        gitHubRemoteDataSource: GitHubRemoteDataSource,
+        gitHubLocalDataSource: GitHubLocalDataSource
+    ) = GitHubRepository(gitHubRemoteDataSource, gitHubLocalDataSource)
 }
