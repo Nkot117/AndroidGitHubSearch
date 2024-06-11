@@ -20,5 +20,19 @@ import javax.inject.Inject
 class FavoriteRepositoryFragmentViewModel @Inject constructor(
     private val gitHubRepository: GitHubRepository,
 ) : ViewModel() {
+    private val _favoriteRepositoryList: MutableLiveData<List<FavoriteRepositoryEntity>> =
+        MutableLiveData()
+    val favoriteRepositoryList: LiveData<List<FavoriteRepositoryEntity>> = _favoriteRepositoryList
 
+    init {
+        viewModelScope.launch {
+            val result = gitHubRepository.getFavoriteRepositories()
+            if (result.isSuccess) {
+                val data = result.getOrNull()
+                val favoriteRepositoryList = data ?: emptyList()
+                _favoriteRepositoryList.value = favoriteRepositoryList
+                Log.d("FavoriteRepositoryFragmentViewModel", "favoriteRepositoryList: $favoriteRepositoryList")
+            }
+        }
+    }
 }
