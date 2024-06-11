@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
+import com.example.androidgithubsearch.ui.adapter.favoriterpositoryadapter.FavoriteRepositoryItem
 import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
+import com.example.androidgithubsearch.utils.dateStringToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -20,9 +22,9 @@ import javax.inject.Inject
 class FavoriteRepositoryFragmentViewModel @Inject constructor(
     private val gitHubRepository: GitHubRepository,
 ) : ViewModel() {
-    private val _favoriteRepositoryList: MutableLiveData<List<FavoriteRepositoryEntity>> =
+    private val _favoriteRepositoryList: MutableLiveData<List<FavoriteRepositoryItem>> =
         MutableLiveData()
-    val favoriteRepositoryList: LiveData<List<FavoriteRepositoryEntity>> = _favoriteRepositoryList
+    val favoriteRepositoryList: LiveData<List<FavoriteRepositoryItem>> = _favoriteRepositoryList
 
     init {
         viewModelScope.launch {
@@ -30,7 +32,22 @@ class FavoriteRepositoryFragmentViewModel @Inject constructor(
             if (result.isSuccess) {
                 val data = result.getOrNull()
                 val favoriteRepositoryList = data ?: emptyList()
-                _favoriteRepositoryList.value = favoriteRepositoryList
+                _favoriteRepositoryList.value = favoriteRepositoryList.map {
+                    FavoriteRepositoryItem(
+                        id = it.id,
+                        name = it.name,
+                        url = it.url,
+                        created = it.created.dateStringToDate(),
+                        updated = it.updated.dateStringToDate(),
+                        language = it.language,
+                        star = it.star,
+                        avatar = it.avatar,
+                        isFavorite = true,
+                        clickAddFavoriteAction = {},
+                        clickRemoveFavoriteAction = {},
+                        clickItemAction = {}
+                    )
+                }
                 Log.d("FavoriteRepositoryFragmentViewModel", "favoriteRepositoryList: $favoriteRepositoryList")
             }
         }

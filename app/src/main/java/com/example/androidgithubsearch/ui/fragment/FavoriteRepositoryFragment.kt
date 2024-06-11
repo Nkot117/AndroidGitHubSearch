@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.androidgithubsearch.databinding.FragmentFavoriteRepositoryBinding
+import com.example.androidgithubsearch.ui.adapter.favoriterpositoryadapter.FavoriteRepositoryAdapter
+import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryAdapter
 import com.example.androidgithubsearch.ui.viewmodel.FavoriteRepositoryFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,11 +27,25 @@ class FavoriteRepositoryFragment : Fragment() {
         _binding = FragmentFavoriteRepositoryBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        setRepositoryRecyclerView()
         return binding.root
     }
     
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setRepositoryRecyclerView() {
+        val adapter = FavoriteRepositoryAdapter()
+        binding.repositoryRecyclerView.also {
+            it.adapter = adapter
+            it.addItemDecoration(
+                DividerItemDecoration(
+                    this.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
     }
 }

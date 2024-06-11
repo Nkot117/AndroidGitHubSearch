@@ -5,6 +5,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidgithubsearch.R
+import com.example.androidgithubsearch.ui.adapter.favoriterpositoryadapter.FavoriteRepositoryAdapter
+import com.example.androidgithubsearch.ui.adapter.favoriterpositoryadapter.FavoriteRepositoryItem
 import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryAdapter
 import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
 import com.example.androidgithubsearch.ui.adapter.userrepositoryadapter.UserRepositoryAdapter
@@ -38,6 +40,13 @@ object BindingAdapters {
     @JvmStatic
     fun setSearchRepositoryListData(recyclerView: RecyclerView, data: List<SearchRepositoryItem>?) {
         val adapter = recyclerView.adapter as SearchRepositoryAdapter
+        adapter.submitList(data)
+    }
+
+    @BindingAdapter("favoriteRepositoryListData")
+    @JvmStatic
+    fun setFavoriteRepositoryListData(recyclerView: RecyclerView, data: List<FavoriteRepositoryItem>?) {
+        val adapter = recyclerView.adapter as FavoriteRepositoryAdapter
         adapter.submitList(data)
     }
 }

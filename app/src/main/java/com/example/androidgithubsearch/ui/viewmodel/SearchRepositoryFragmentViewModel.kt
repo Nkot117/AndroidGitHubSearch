@@ -9,6 +9,7 @@ import com.example.androidgithubsearch.data.api.GitHubSearchRepositoryResponse
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.repository.GitHubRepository
 import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
+import com.example.androidgithubsearch.utils.dateStringToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -80,11 +81,6 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         }
     }
 
-    private fun dateStringToDate(dateString: String): Date {
-        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-        return formatter.parse(dateString) ?: Date()
-    }
-
     private fun createSearchRepositoryItem(
         repositoryResponse: GitHubSearchRepositoryResponse.Item,
         isFavorite: Boolean
@@ -93,8 +89,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             id = repositoryResponse.id,
             name = repositoryResponse.name,
             url = repositoryResponse.url,
-            created = dateStringToDate(repositoryResponse.created),
-            updated = dateStringToDate(repositoryResponse.updated),
+            created = repositoryResponse.created.dateStringToDate(),
+            updated = repositoryResponse.updated.dateStringToDate(),
             language = repositoryResponse.language ?: "Unknown",
             star = repositoryResponse.star,
             avatar = repositoryResponse.owner.avatar,

@@ -17,23 +17,23 @@ class FavoriteRepositoryAdapter :
         private val binding: FavoriteRepositoryRowItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repositoryItem: FavoriteRepositoryItem) {
-//            binding.repositoryItem = repositoryItem
-//
-//            binding.root.setOnClickListener {
-//                repositoryItem.clickItemAction()
-//            }
-//
-//            binding.addFavorite.setOnClickListener {
-//                binding.removeFavorite.visibility = View.VISIBLE
-//                binding.addFavorite.visibility = View.GONE
-//                repositoryItem.clickAddFavoriteAction()
-//            }
-//
-//            binding.removeFavorite.setOnClickListener {
-//                binding.removeFavorite.visibility = View.GONE
-//                binding.addFavorite.visibility = View.VISIBLE
-//                repositoryItem.clickRemoveFavoriteAction()
-//            }
+            binding.repositoryItem = repositoryItem
+
+            binding.root.setOnClickListener {
+                repositoryItem.clickItemAction()
+            }
+
+            binding.addFavorite.setOnClickListener {
+                binding.removeFavorite.visibility = View.VISIBLE
+                binding.addFavorite.visibility = View.GONE
+                repositoryItem.clickAddFavoriteAction()
+            }
+
+            binding.removeFavorite.setOnClickListener {
+                binding.removeFavorite.visibility = View.GONE
+                binding.addFavorite.visibility = View.VISIBLE
+                repositoryItem.clickRemoveFavoriteAction()
+            }
         }
     }
 
