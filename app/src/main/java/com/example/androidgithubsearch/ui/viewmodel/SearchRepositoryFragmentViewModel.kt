@@ -127,7 +127,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             avatar = repositoryResponse.owner.avatar,
             created = repositoryResponse.created,
             updated = repositoryResponse.updated,
-            language = repositoryResponse.language,
+            language = repositoryResponse.language?: "Unknown",
             star = repositoryResponse.star
         )
     }
