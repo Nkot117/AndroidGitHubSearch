@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="repositoryItem"
+            type="com.example.androidgithubsearch.ui.adapter.favoriterpositoryadapter.FavoriteRepositoryItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="4sp"
+        android:paddingStart="8sp"
+        tools:ignore="RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:imageUrl="@{repositoryItem.avatar}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:text="@{repositoryItem.name}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/addFavorite"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Repository Name" />
+
+        <TextView
+            android:id="@+id/language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4sp"
+            android:background="@drawable/label_language_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
+            android:text="@{repositoryItem.language}"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="Java" />
+
+        <TextView
+            android:id="@+id/stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:background="@drawable/label_stars_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
+            android:text="@{@string/stars_format(repositoryItem.star)}"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@id/language"
+            app:layout_constraintTop_toTopOf="@id/language"
+            tools:text="100 Stars" />
+
+        <TextView
+            android:id="@+id/updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:background="@drawable/label_updated_background"
+            android:paddingHorizontal="4sp"
+            android:paddingVertical="2sp"
+            android:text="@{@string/updated_format(repositoryItem.formatUpdatedDate())}"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@id/stars"
+            app:layout_constraintTop_toTopOf="@id/stars"
+            tools:text="2021-01-01 Update" />
+
+        <ImageView
+            android:id="@+id/openWebView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/open_web_view_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/addFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/heart_plus_24px"
+            android:visibility="@{repositoryItem.isFavorite ?  View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
+            app:layout_constraintEnd_toStartOf="@+id/openWebView"
+            app:layout_constraintTop_toTopOf="@+id/openWebView" />
+
+        <ImageView
+            android:id="@+id/removeFavorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12sp"
+            android:src="@drawable/favorite_24px"
+            android:visibility="@{repositoryItem.isFavorite ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
+            app:layout_constraintEnd_toStartOf="@+id/openWebView"
+            app:layout_constraintTop_toTopOf="@+id/openWebView"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
