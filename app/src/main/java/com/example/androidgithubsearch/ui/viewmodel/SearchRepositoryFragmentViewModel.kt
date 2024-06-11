@@ -102,10 +102,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             clickAddFavoriteAction = {
                 viewModelScope.launch {
                     gitHubRepository.addFavoriteRepository(
-                        FavoriteRepositoryEntity(
-                            id = repositoryResponse.id,
-                            name = repositoryResponse.name,
-                            url = repositoryResponse.url,
+                        createFavoriteRepositoryEntity(
+                            repositoryResponse
                         )
                     )
                 }
@@ -113,10 +111,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             clickRemoveFavoriteAction = {
                 viewModelScope.launch {
                     gitHubRepository.deleteFavoriteRepository(
-                        FavoriteRepositoryEntity(
-                            id = repositoryResponse.id,
-                            name = repositoryResponse.name,
-                            url = repositoryResponse.url,
+                        createFavoriteRepositoryEntity(
+                            repositoryResponse
                         )
                     )
                 }
@@ -124,6 +120,19 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             clickItemAction = {
                 _moveUrlPage.value = repositoryResponse.url
             }
+        )
+    }
+
+    private fun createFavoriteRepositoryEntity(repositoryResponse: GitHubSearchRepositoryResponse.Item): FavoriteRepositoryEntity {
+        return FavoriteRepositoryEntity(
+            id = repositoryResponse.id,
+            name = repositoryResponse.name,
+            url = repositoryResponse.url,
+            avatar = repositoryResponse.owner.avatar,
+            created = repositoryResponse.created,
+            updated = repositoryResponse.updated,
+            language = repositoryResponse.language,
+            star = repositoryResponse.star
         )
     }
 }
