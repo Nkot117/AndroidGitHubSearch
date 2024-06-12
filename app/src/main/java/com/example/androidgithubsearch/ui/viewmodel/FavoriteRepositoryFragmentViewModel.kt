@@ -26,6 +26,9 @@ class FavoriteRepositoryFragmentViewModel @Inject constructor(
         MutableLiveData()
     val favoriteRepositoryList: LiveData<List<FavoriteRepositoryItem>> = _favoriteRepositoryList
 
+    private val _moveUrlPage = MutableLiveData<String?>()
+    val moveUrlPage: LiveData<String?> = _moveUrlPage
+
     init {
         viewModelScope.launch {
             val result = gitHubRepository.getFavoriteRepositories()
@@ -43,13 +46,52 @@ class FavoriteRepositoryFragmentViewModel @Inject constructor(
                         star = it.star,
                         avatar = it.avatar,
                         isFavorite = true,
-                        clickAddFavoriteAction = {},
-                        clickRemoveFavoriteAction = {},
-                        clickItemAction = {}
+                        clickAddFavoriteAction = {
+                            viewModelScope.launch {
+                                gitHubRepository.addFavoriteRepository(
+                                    FavoriteRepositoryEntity(
+                                        id = it.id,
+                                        name = it.name,
+                                        url = it.url,
+                                        created = it.created,
+                                        updated = it.updated,
+                                        language = it.language,
+                                        star = it.star,
+                                        avatar = it.avatar
+                                    )
+                                )
+                            }
+                        },
+                        clickRemoveFavoriteAction = {
+                            viewModelScope.launch {
+                             gitHubRepository.deleteFavoriteRepository(
+                                    FavoriteRepositoryEntity(
+                                        id = it.id,
+                                        name = it.name,
+                                        url = it.url,
+                                        created = it.created,
+                                        updated = it.updated,
+                                        language = it.language,
+                                        star = it.star,
+                                        avatar = it.avatar
+                                    )
+                             )
+                            }
+                        },
+                        clickItemAction = {
+                            _moveUrlPage.value = it.url
+                        }
                     )
                 }
-                Log.d("FavoriteRepositoryFragmentViewModel", "favoriteRepositoryList: $favoriteRepositoryList")
+                Log.d(
+                    "FavoriteRepositoryFragmentViewModel",
+                    "favoriteRepositoryList: $favoriteRepositoryList"
+                )
             }
         }
+    }
+
+    fun moveDonePage() {
+        _moveUrlPage.value = null
     }
 }

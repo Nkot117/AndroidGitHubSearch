@@ -26,8 +26,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
     private val _currentPage: MutableLiveData<Int> = MutableLiveData(0)
     val currentPage: LiveData<Int> = _currentPage
 
-    private val _moveUrlPage: MutableLiveData<String> = MutableLiveData()
-    val moveUrlPage: LiveData<String> = _moveUrlPage
+    private val _moveUrlPage: MutableLiveData<String?> = MutableLiveData()
+    val moveUrlPage: LiveData<String?> = _moveUrlPage
 
     private var searchQuery: String? = null
 
@@ -47,6 +47,10 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             _currentPage.value = 1
             searchRepository()
         }
+    }
+
+    fun moveDonePage() {
+        _moveUrlPage.value = null
     }
 
     private fun searchRepository() {

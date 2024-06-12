@@ -60,6 +60,7 @@ class SearchRepositoryFragment : Fragment() {
             url?.let {
                 val intent = WebViewActivity.createIntent(binding.root.context, it)
                 binding.root.context.startActivity(intent)
+                viewModel.moveDonePage()
             }
         }
     }
