@@ -7,6 +7,7 @@ import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.data.repository.localdatasource.GitHubLocalDataSourceInterface
 import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubRemoteDataSourceInterface
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -63,15 +64,14 @@ class GitHubRepository @Inject constructor(
         }
     }
 
-    suspend fun getFavoriteRepositories(): Result<List<FavoriteRepositoryEntity>> {
-        return withContext(Dispatchers.IO) {
-            try {
-                Result.success(gitHubLocalDataSource.getAllFavoriteRepositories())
-            } catch (e: Exception) {
-                Log.e("GitHubRepository", "Error getFavoriteRepositories: ${e.message}")
-                Result.failure(e)
-            }
+    fun getFavoriteRepositories(): Result<Flow<List<FavoriteRepositoryEntity>>> {
+        try {
+            return Result.success(gitHubLocalDataSource.getAllFavoriteRepositories())
+        } catch (e: Exception) {
+            Log.e("GitHubRepository", "Error getFavoriteRepositories: ${e.message}")
+            return Result.failure(e)
         }
+
     }
 
     suspend fun deleteFavoriteRepository(repository: FavoriteRepositoryEntity) {

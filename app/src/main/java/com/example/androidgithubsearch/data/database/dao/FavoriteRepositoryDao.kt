@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteRepositoryDao {
@@ -15,5 +16,5 @@ interface FavoriteRepositoryDao {
     suspend fun delete(favoriteRepositoryEntity: FavoriteRepositoryEntity)
 
     @Query("SELECT * FROM FavoriteRepositoryEntity")
-    suspend fun getAll(): List<FavoriteRepositoryEntity>
+    fun getAll(): Flow<List<FavoriteRepositoryEntity>>
 }
