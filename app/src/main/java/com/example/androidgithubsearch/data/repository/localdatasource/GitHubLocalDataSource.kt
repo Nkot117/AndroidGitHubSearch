@@ -4,6 +4,7 @@ import com.example.androidgithubsearch.data.database.dao.FavoriteRepositoryDao
 import com.example.androidgithubsearch.data.database.dao.UserRepositoryDao
 import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEntity
 import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GitHubLocalDataSource @Inject constructor(
@@ -27,7 +28,7 @@ class GitHubLocalDataSource @Inject constructor(
         favoriteRepositoryDao.insert(favoriteRepositoryEntity)
     }
 
-    override suspend fun getAllFavoriteRepositories(): List<FavoriteRepositoryEntity> {
+    override fun getAllFavoriteRepositories(): Flow<List<FavoriteRepositoryEntity>> {
         return favoriteRepositoryDao.getAll()
     }
 

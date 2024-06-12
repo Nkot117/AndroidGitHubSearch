@@ -7,5 +7,10 @@ import androidx.room.PrimaryKey
 data class FavoriteRepositoryEntity(
     @PrimaryKey val id: Int,
     val name: String,
-    val url: String
+    val url: String,
+    val avatar: String,
+    val created: String,
+    val updated: String,
+    val language: String?,
+    val star: Int
 )
