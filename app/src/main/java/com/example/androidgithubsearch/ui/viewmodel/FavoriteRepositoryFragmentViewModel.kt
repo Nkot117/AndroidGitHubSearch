@@ -56,32 +56,14 @@ class FavoriteRepositoryFragmentViewModel @Inject constructor(
             clickAddFavoriteAction = {
                 viewModelScope.launch {
                     gitHubRepository.addFavoriteRepository(
-                        FavoriteRepositoryEntity(
-                            id = favoriteRepositoryEntity.id,
-                            name = favoriteRepositoryEntity.name,
-                            url = favoriteRepositoryEntity.url,
-                            created = favoriteRepositoryEntity.created,
-                            updated = favoriteRepositoryEntity.updated,
-                            language = favoriteRepositoryEntity.language,
-                            star = favoriteRepositoryEntity.star,
-                            avatar = favoriteRepositoryEntity.avatar
-                        )
+                        favoriteRepositoryEntity
                     )
                 }
             },
             clickRemoveFavoriteAction = {
                 viewModelScope.launch {
                     gitHubRepository.deleteFavoriteRepository(
-                        FavoriteRepositoryEntity(
-                            id = favoriteRepositoryEntity.id,
-                            name = favoriteRepositoryEntity.name,
-                            url = favoriteRepositoryEntity.url,
-                            created = favoriteRepositoryEntity.created,
-                            updated = favoriteRepositoryEntity.updated,
-                            language = favoriteRepositoryEntity.language,
-                            star = favoriteRepositoryEntity.star,
-                            avatar = favoriteRepositoryEntity.avatar
-                        )
+                        favoriteRepositoryEntity
                     )
                 }
             },
