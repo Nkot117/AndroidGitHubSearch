@@ -54,15 +54,7 @@ class UserRepositoryFragment : Fragment() {
 
     private fun setRepositoryRecyclerView() {
         val adapter = UserRepositoryAdapter()
-        binding.repositoryRecyclerView.also {
-            it.adapter = adapter
-            it.addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-        }
+        binding.repositoryRecyclerView.adapter = adapter
 
         viewModel.moveUrlPage.observe(viewLifecycleOwner) { url ->
             url?.let {

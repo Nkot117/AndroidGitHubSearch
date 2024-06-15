@@ -94,4 +94,7 @@ dependencies {
     
     // Coil
     implementation("io.coil-kt:coil:1.4.0")
+
+    // CardView
+    implementation("androidx.cardview:cardview:1.0.0")
 }
