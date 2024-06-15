@@ -11,10 +11,9 @@ import com.example.androidgithubsearch.data.repository.GitHubRepository
 import com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter.SearchRepositoryItem
 import com.example.androidgithubsearch.utils.dateStringToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +29,15 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
     val moveUrlPage: LiveData<String?> = _moveUrlPage
 
     private var searchQuery: String? = null
+
+    private val favoriteRepository: Flow<List<FavoriteRepositoryEntity>> = flow {
+        val result = gitHubRepository.getFavoriteRepositories()
+        if (result.isSuccess) {
+            result.getOrNull()?.collect {
+                emit(it)
+            }
+        }
+    }
 
     fun clickNextPage() {
         _currentPage.value = _currentPage.value?.plus(1)
@@ -58,29 +66,26 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             val result = searchQuery?.let {
                 gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
             }
-
-            if (result?.isSuccess == true) {
-                val data = result.getOrNull()
-                val repositoryList = data?.items ?: emptyList()
-                val favoriteRepositoriesResult = gitHubRepository.getFavoriteRepositories()
-                val favoriteRepositoryIdList =
-                    favoriteRepositoriesResult.getOrNull()?.map { it.id } ?: emptyList()
-
-
-                val repositoryItems = repositoryList.map {
-                    createSearchRepositoryItem(
-                        it,
-                        favoriteRepositoryIdList.contains(it.id)
+            favoriteRepository.collect { favoriteRepositoryList ->
+                if (result?.isSuccess == true) {
+                    val data = result.getOrNull()
+                    val repositoryList = data?.items ?: emptyList()
+                    val favoriteRepositoryIdList = favoriteRepositoryList.map { it.id }
+                    val repositoryItems = repositoryList.map {
+                        createSearchRepositoryItem(
+                            it,
+                            favoriteRepositoryIdList.contains(it.id)
+                        )
+                    }
+                    _searchRepositories.value = repositoryItems
+                } else {
+                    Log.e(
+                        "SearchRepositoryFragmentViewModel",
+                        "searchRepositories error",
+                        result?.exceptionOrNull()
                     )
+                    _searchRepositories.value = emptyList()
                 }
-                _searchRepositories.value = repositoryItems
-            } else {
-                Log.e(
-                    "SearchRepositoryFragmentViewModel",
-                    "searchRepositories error",
-                    result?.exceptionOrNull()
-                )
-                _searchRepositories.value = emptyList()
             }
         }
     }
@@ -131,7 +136,7 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             avatar = repositoryResponse.owner.avatar,
             created = repositoryResponse.created,
             updated = repositoryResponse.updated,
-            language = repositoryResponse.language?: "Unknown",
+            language = repositoryResponse.language ?: "Unknown",
             star = repositoryResponse.star
         )
     }
