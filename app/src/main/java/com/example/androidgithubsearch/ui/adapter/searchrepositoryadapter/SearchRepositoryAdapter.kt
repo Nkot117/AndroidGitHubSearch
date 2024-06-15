@@ -1,7 +1,6 @@
 package com.example.androidgithubsearch.ui.adapter.searchrepositoryadapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -22,12 +21,12 @@ class SearchRepositoryAdapter :
                 repositoryItem.clickItemAction()
             }
 
-            binding.addFavorite.setOnClickListener {
-                repositoryItem.clickAddFavoriteAction()
-            }
-
-            binding.removeFavorite.setOnClickListener {
-                repositoryItem.clickRemoveFavoriteAction()
+            binding.favorite.setOnClickListener {
+                if (repositoryItem.isFavorite) {
+                    repositoryItem.clickRemoveFavoriteAction()
+                } else {
+                    repositoryItem.clickAddFavoriteAction()
+                }
             }
         }
     }

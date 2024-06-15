@@ -36,7 +36,7 @@
             android:text="@{repositoryItem.name}"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/addFavorite"
+            app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Repository Name" />
@@ -94,27 +94,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/addFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12sp"
-            android:src="@drawable/heart_plus_24px"
-            android:visibility="@{repositoryItem.isFavorite ?  View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
-            app:layout_constraintEnd_toStartOf="@+id/openWebView"
-            app:layout_constraintTop_toTopOf="@+id/openWebView" />
-
-        <ImageView
-            android:id="@+id/removeFavorite"
+            android:id="@+id/favorite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="12sp"
-            android:src="@drawable/favorite_24px"
-            android:visibility="@{repositoryItem.isFavorite ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/openWebView"
             app:layout_constraintEnd_toStartOf="@+id/openWebView"
             app:layout_constraintTop_toTopOf="@+id/openWebView"
-            tools:visibility="gone" />
+            app:setFavoriteIcon="@{repositoryItem.isFavorite}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

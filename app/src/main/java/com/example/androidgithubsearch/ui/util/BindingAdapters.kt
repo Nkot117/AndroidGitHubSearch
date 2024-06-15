@@ -49,4 +49,14 @@ object BindingAdapters {
         val adapter = recyclerView.adapter as FavoriteRepositoryAdapter
         adapter.submitList(data)
     }
+
+    @BindingAdapter("setFavoriteIcon")
+    @JvmStatic
+    fun setFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
+        if(isFavorite) {
+            imageView.setImageResource(R.drawable.favorite_24px)
+        } else {
+            imageView.setImageResource(R.drawable.heart_plus_24px)
+        }
+    }
 }
