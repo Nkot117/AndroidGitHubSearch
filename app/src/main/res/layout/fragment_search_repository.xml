@@ -47,7 +47,7 @@
             android:layout_height="34sp"
             android:onClick="@{() -> viewModel.clickNextPage()}"
             android:src="@drawable/arrow_forward_24px"
-            android:visibility="@{viewModel.currentPage >= 1 ? View.VISIBLE :  View.GONE}"
+            android:visibility="@{viewModel.searchRepositories.size() >= 1 ? View.VISIBLE :  View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/currentPageTextView"
             app:layout_constraintStart_toEndOf="@+id/currentPageTextView"
             app:layout_constraintTop_toTopOf="@+id/currentPageTextView" />

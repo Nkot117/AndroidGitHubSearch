@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="4dp"
+    >
 
     <data>
 
@@ -13,17 +15,23 @@
 
     </data>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="4sp"
-        android:paddingStart="8sp"
-        tools:ignore="RtlSymmetry">
+        android:padding="16dp"
+        tools:ignore="RtlSymmetry"
+        >
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             app:imageUrl="@{repositoryItem.avatar}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +45,7 @@
             android:text="@{repositoryItem.name}"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/addFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/favorite"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Repository Name" />
@@ -60,28 +68,28 @@
             android:id="@+id/stars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8sp"
+            android:layout_marginTop="4sp"
             android:background="@drawable/label_stars_background"
             android:paddingHorizontal="4sp"
             android:paddingVertical="2sp"
             android:text="@{@string/stars_format(repositoryItem.star)}"
             android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/language"
-            app:layout_constraintTop_toTopOf="@id/language"
+            app:layout_constraintTop_toBottomOf="@+id/language"
+            app:layout_constraintStart_toStartOf="@+id/language"
             tools:text="100 Stars" />
 
         <TextView
             android:id="@+id/updated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8sp"
+            android:layout_marginTop="4sp"
             android:background="@drawable/label_updated_background"
             android:paddingHorizontal="4sp"
             android:paddingVertical="2sp"
             android:text="@{@string/updated_format(repositoryItem.formatUpdatedDate())}"
             android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/stars"
-            app:layout_constraintTop_toTopOf="@id/stars"
+            app:layout_constraintTop_toBottomOf="@+id/stars"
+            app:layout_constraintStart_toStartOf="@+id/stars"
             tools:text="2021-01-01 Update" />
 
         <ImageView
@@ -95,27 +103,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/addFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12sp"
-            android:src="@drawable/heart_plus_24px"
-            android:visibility="@{repositoryItem.isFavorite ?  View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/openWebView"
-            app:layout_constraintEnd_toStartOf="@+id/openWebView"
-            app:layout_constraintTop_toTopOf="@+id/openWebView" />
-
-        <ImageView
-            android:id="@+id/removeFavorite"
+            android:id="@+id/favorite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="12sp"
-            android:src="@drawable/favorite_24px"
-            android:visibility="@{repositoryItem.isFavorite ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/openWebView"
             app:layout_constraintEnd_toStartOf="@+id/openWebView"
             app:layout_constraintTop_toTopOf="@+id/openWebView"
-            tools:visibility="gone" />
+            app:setFavoriteIcon="@{repositoryItem.isFavorite}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

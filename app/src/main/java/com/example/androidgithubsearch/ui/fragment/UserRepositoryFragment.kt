@@ -23,10 +23,6 @@ class UserRepositoryFragment : Fragment() {
 
     private val viewModel: UserRepositoryFragmentViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,15 +54,7 @@ class UserRepositoryFragment : Fragment() {
 
     private fun setRepositoryRecyclerView() {
         val adapter = UserRepositoryAdapter()
-        binding.repositoryRecyclerView.also {
-            it.adapter = adapter
-            it.addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-        }
+        binding.repositoryRecyclerView.adapter = adapter
 
         viewModel.moveUrlPage.observe(viewLifecycleOwner) { url ->
             url?.let {

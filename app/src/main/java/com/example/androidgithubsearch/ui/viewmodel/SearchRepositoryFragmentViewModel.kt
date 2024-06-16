@@ -39,6 +39,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
         }
     }
 
+    private var searchResult: List<GitHubSearchRepositoryResponse.Item>? = null
+
     fun clickNextPage() {
         _currentPage.value = _currentPage.value?.plus(1)
         searchRepository()
@@ -63,30 +65,8 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
 
     private fun searchRepository() {
         viewModelScope.launch {
-            val result = searchQuery?.let {
-                gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
-            }
-            favoriteRepository.collect { favoriteRepositoryList ->
-                if (result?.isSuccess == true) {
-                    val data = result.getOrNull()
-                    val repositoryList = data?.items ?: emptyList()
-                    val favoriteRepositoryIdList = favoriteRepositoryList.map { it.id }
-                    val repositoryItems = repositoryList.map {
-                        createSearchRepositoryItem(
-                            it,
-                            favoriteRepositoryIdList.contains(it.id)
-                        )
-                    }
-                    _searchRepositories.value = repositoryItems
-                } else {
-                    Log.e(
-                        "SearchRepositoryFragmentViewModel",
-                        "searchRepositories error",
-                        result?.exceptionOrNull()
-                    )
-                    _searchRepositories.value = emptyList()
-                }
-            }
+            getSearchRepositories()
+            updateSearchRepositories()
         }
     }
 
@@ -139,5 +119,35 @@ class SearchRepositoryFragmentViewModel @Inject constructor(
             language = repositoryResponse.language ?: "Unknown",
             star = repositoryResponse.star
         )
+    }
+
+    private suspend fun getSearchRepositories() {
+        val result = searchQuery?.let {
+            gitHubRepository.searchRepositories(it, _currentPage.value ?: 1)
+        }
+
+        if (result?.isSuccess == true) {
+            val data = result.getOrNull()
+            searchResult = data?.items ?: emptyList()
+        } else {
+            searchResult = emptyList()
+        }
+    }
+
+    private suspend fun updateSearchRepositories() {
+        favoriteRepository.collect { favoriteRepositoryList ->
+            searchResult?.let { searchResult ->
+                val favoriteRepositoryIdList = favoriteRepositoryList.map { it.id }
+                val repositoryItems = searchResult.map {
+                    createSearchRepositoryItem(
+                        it,
+                        favoriteRepositoryIdList.contains(it.id)
+                    )
+                }
+                _searchRepositories.value = repositoryItems
+            } ?: run {
+                _searchRepositories.value = emptyList()
+            }
+        }
     }
 }
