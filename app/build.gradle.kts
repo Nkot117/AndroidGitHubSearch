@@ -97,4 +97,12 @@ dependencies {
 
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // Local unit tests
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.google.truth:truth:1.4.2")
+    testImplementation("org.robolectric:robolectric:4.12.1")
+    testImplementation("androidx.test.ext:junit-ktx:1.1.5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+    testImplementation("app.cash.turbine:turbine:1.1.0")
 }
