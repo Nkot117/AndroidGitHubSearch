@@ -1,4 +1,4 @@
-package com.example.androidgithubsearch
+package com.example.androidgithubsearch.data
 
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,8 +1,9 @@
-package com.example.androidgithubsearch
+package com.example.androidgithubsearch.data
 
 import com.example.androidgithubsearch.data.api.GitHubApiService
 import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubRemoteDataSource
 import com.example.androidgithubsearch.data.repository.remotedatasource.GitHubRemoteDataSourceInterface
+import com.example.androidgithubsearch.setBodyFromFileName
 import com.google.common.truth.Truth.assertThat
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
