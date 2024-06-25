@@ -42,7 +42,6 @@ class GitHubLocalDataSourceTest {
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @RunWith(AndroidJUnit4::class)
     class BlankRecordTest : DBTest() {
         @Test
@@ -61,7 +60,6 @@ class GitHubLocalDataSourceTest {
 
             val list = gitHubLocalDataSource.getAllUserRepositories()
 
-            advanceUntilIdle()
             assertThat(list).hasSize(1)
         }
 
@@ -78,7 +76,6 @@ class GitHubLocalDataSourceTest {
                 star = 1
             )
             gitHubLocalDataSource.insertFavoriteRepository(favoriteRepositoryEntity)
-            advanceUntilIdle()
 
             val list = gitHubLocalDataSource.getAllFavoriteRepositories()
             list.test {
@@ -87,7 +84,6 @@ class GitHubLocalDataSourceTest {
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @RunWith(AndroidJUnit4::class)
     class NonBlankRecordTest : DBTest() {
         @Before
@@ -165,14 +161,11 @@ class GitHubLocalDataSourceTest {
             favoriteRepositoryEntityList.map {
                 gitHubLocalDataSource.insertFavoriteRepository(it)
             }
-
-            advanceUntilIdle()
         }
 
         @Test
         fun get_all_user_repositories() = runTest {
             val list = gitHubLocalDataSource.getAllUserRepositories()
-            advanceUntilIdle()
             assertThat(list).hasSize(3)
         }
 
@@ -187,7 +180,6 @@ class GitHubLocalDataSourceTest {
         @Test
         fun delete_all_user_repositories() = runTest {
             gitHubLocalDataSource.deleteAllUserRepositories()
-            advanceUntilIdle()
             val list = gitHubLocalDataSource.getAllUserRepositories()
             assertThat(list).isEmpty()
         }
@@ -204,7 +196,6 @@ class GitHubLocalDataSourceTest {
                 language = "language",
                 star = 1
             ))
-            advanceUntilIdle()
             val list = gitHubLocalDataSource.getAllFavoriteRepositories()
             list.test {
                 assertThat(awaitItem()).hasSize(2)
