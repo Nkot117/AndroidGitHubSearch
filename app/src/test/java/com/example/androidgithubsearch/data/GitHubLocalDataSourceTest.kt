@@ -9,8 +9,6 @@ import com.example.androidgithubsearch.data.database.entity.FavoriteRepositoryEn
 import com.example.androidgithubsearch.data.database.entity.UserRepositoryEntity
 import com.example.androidgithubsearch.data.repository.localdatasource.GitHubLocalDataSource
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
