@@ -69,7 +69,7 @@ class GitHubRemoteDataSourceTest {
     }
 
     @Test
-    fun get_user_repositories_success() = runTest {
+    fun `getUserRepositories_リモートのユーザーリポジトリが取得できること`() = runTest {
         val response = gitHubRemoteDataSource.getUserRepositories("username")
         assertThat(response).also {
             it.isNotEmpty()
@@ -78,7 +78,7 @@ class GitHubRemoteDataSourceTest {
     }
 
     @Test
-    fun get_user_repositories_not_found() = runTest {
+    fun `getUserRepositories_ユーザーリポジトリが取得できない場合、例外がスローされること_存在しないユーザー名`() = runTest {
         try {
          gitHubRemoteDataSource.getUserRepositories("test")
         } catch (e: Exception) {
@@ -87,7 +87,7 @@ class GitHubRemoteDataSourceTest {
     }
 
     @Test
-    fun get_user_repositories_not_username() = runTest {
+    fun `getUserRepositories_ユーザーリポジトリが取得できない場合、例外がスローされること_空文字`() = runTest {
         try {
             gitHubRemoteDataSource.getUserRepositories("")
         } catch (e: Exception) {
@@ -96,7 +96,7 @@ class GitHubRemoteDataSourceTest {
     }
 
     @Test
-    fun get_search_repositories_success() = runTest {
+    fun `searchRepositories_検索結果が取得できること`() = runTest {
         val response = gitHubRemoteDataSource.searchRepositories("search",1)
         assertThat(response.totalCount).also {
             it.isNotNull()
@@ -109,7 +109,7 @@ class GitHubRemoteDataSourceTest {
     }
 
     @Test
-    fun get_search_repositories_error() = runTest {
+    fun `searchRepositories_検索結果が取得できない場合、例外がスローされること_検索文字が空文字`() = runTest {
         try {
             gitHubRemoteDataSource.searchRepositories("",1)
         } catch (e: Exception) {

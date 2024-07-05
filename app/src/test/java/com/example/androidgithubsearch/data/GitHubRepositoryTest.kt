@@ -39,7 +39,7 @@ class GitHubRepositoryTest {
     }
 
     @Test
-    fun fetch_and_save_user_repositories_success() = runTest {
+    fun `fetchAndSaveUserRepositories_ユーザーリポジトリを取得し・保存できること`() = runTest {
         val userName = "TestUser"
         val remoteResponse = getMockGitHubUserRepositoryResponse()
 
@@ -59,25 +59,90 @@ class GitHubRepositoryTest {
     }
 
     @Test
-    fun  fetch_and_save_user_repositories_error() = runTest {
+    fun `fetchAndSaveUserRepositories_リポジトリ削除に失敗した場合、ログ出力されること`() = runTest {
         val userName = "TestUser"
-        val exceptionMessage = "Network error"
+        val exceptionMessage = "Delete Repository Error"
         val logSlot = slot<String>()
 
-        coEvery { gitHubLocalDataSource.deleteAllUserRepositories() } just Runs
-        coEvery { gitHubRemoteDataSource.getUserRepositories(userName) } throws Exception(exceptionMessage)
+        coEvery { gitHubLocalDataSource.deleteAllUserRepositories() } throws Exception(
+            exceptionMessage
+        )
 
         mockkStatic(Log::class)
         every { Log.e(any(), capture(logSlot)) } returns 0
 
         gitHubRepository.fetchAndSaveUserRepositories(userName)
 
-        verify { Log.e("GitHubRepository", "Error fetchAndSaveUserRepositories: $exceptionMessage") }
+        verify {
+            Log.e(
+                "GitHubRepository",
+                "Error fetchAndSaveUserRepositories: $exceptionMessage"
+            )
+        }
+
+        coVerify { gitHubLocalDataSource.deleteAllUserRepositories() }
+    }
+
+    @Test
+    fun `fetchAndSaveUserRepositories_リポジトリ取得に失敗した場合、ログ出力されること`() = runTest {
+        val userName = "TestUser"
+        val exceptionMessage = "Get Repository Error"
+        val logSlot = slot<String>()
+
+        coEvery { gitHubLocalDataSource.deleteAllUserRepositories() } just Runs
+        coEvery { gitHubRemoteDataSource.getUserRepositories(userName) } throws Exception(
+            exceptionMessage
+        )
+
+        mockkStatic(Log::class)
+        every { Log.e(any(), capture(logSlot)) } returns 0
+
+        gitHubRepository.fetchAndSaveUserRepositories(userName)
+
+        verify {
+            Log.e(
+                "GitHubRepository",
+                "Error fetchAndSaveUserRepositories: $exceptionMessage"
+            )
+        }
 
         coVerifySequence {
             gitHubLocalDataSource.deleteAllUserRepositories()
+            gitHubRemoteDataSource.getUserRepositories(userName)
         }
     }
+
+    @Test
+    fun `fetchAndSaveUserRepositories_リポジトリ保存に失敗した場合、ログ出力されること`() = runTest {
+        val userName = "TestUser"
+        val exceptionMessage = "Save Repository Error"
+        val logSlot = slot<String>()
+
+        coEvery { gitHubLocalDataSource.deleteAllUserRepositories() } just Runs
+        coEvery { gitHubRemoteDataSource.getUserRepositories(userName) } returns getMockGitHubUserRepositoryResponse()
+        coEvery { gitHubLocalDataSource.insertUserRepository(any()) } throws Exception(
+            exceptionMessage
+        )
+
+        mockkStatic(Log::class)
+        every { Log.e(any(), capture(logSlot)) } returns 0
+
+        gitHubRepository.fetchAndSaveUserRepositories(userName)
+
+        verify {
+            Log.e(
+                "GitHubRepository",
+                "Error fetchAndSaveUserRepositories: $exceptionMessage"
+            )
+        }
+
+        coVerifySequence {
+            gitHubLocalDataSource.deleteAllUserRepositories()
+            gitHubRemoteDataSource.getUserRepositories(userName)
+            gitHubLocalDataSource.insertUserRepository(any())
+        }
+    }
+
 
     private fun getMockGitHubUserRepositoryResponse(): List<GitHubUserRepositoryResponse> {
         return listOf(

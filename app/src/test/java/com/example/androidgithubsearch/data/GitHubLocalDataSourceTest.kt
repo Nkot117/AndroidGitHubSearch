@@ -45,7 +45,7 @@ class GitHubLocalDataSourceTest {
     @RunWith(AndroidJUnit4::class)
     class BlankRecordTest : DBTest() {
         @Test
-        fun insert_user_repository() = runTest {
+        fun `insertUserRepository_1件のデータが挿入されること`() = runTest {
             val userRepositoryEntity = UserRepositoryEntity(
                 id = 1,
                 name = "name",
@@ -64,7 +64,7 @@ class GitHubLocalDataSourceTest {
         }
 
         @Test
-        fun insert_favorite_repository() = runTest {
+        fun `insertFavoriteRepository_1件のデータが挿入されること`() = runTest {
             val favoriteRepositoryEntity = FavoriteRepositoryEntity(
                 id = 1,
                 name = "name",
@@ -164,13 +164,13 @@ class GitHubLocalDataSourceTest {
         }
 
         @Test
-        fun get_all_user_repositories() = runTest {
+        fun `getAllUserRepositories_DBに保存されている全てのユーザーリポジトリーデータが取得されること`() = runTest {
             val list = gitHubLocalDataSource.getAllUserRepositories()
             assertThat(list).hasSize(3)
         }
 
         @Test
-        fun get_all_favorite_repositories() = runTest {
+        fun `getAllFavoriteRepositories_DBに保存されている全てのお気に入りリポジトリーデータが取得されること`() = runTest {
             val list = gitHubLocalDataSource.getAllFavoriteRepositories()
             list.test {
                 assertThat(awaitItem()).hasSize(3)
@@ -178,14 +178,14 @@ class GitHubLocalDataSourceTest {
         }
 
         @Test
-        fun delete_all_user_repositories() = runTest {
+        fun `deleteAllUserRepositories_DBに保存されている全てのユーザーリポジトリーデータが削除されること`() = runTest {
             gitHubLocalDataSource.deleteAllUserRepositories()
             val list = gitHubLocalDataSource.getAllUserRepositories()
             assertThat(list).isEmpty()
         }
 
         @Test
-        fun delete_all_favorite_repositories() = runTest {
+        fun `deleteFavoriteRepository_DBに保存されている全てのお気に入りリポジトリーデータが削除されること`() = runTest {
             gitHubLocalDataSource.deleteFavoriteRepository(FavoriteRepositoryEntity(
                 id = 1,
                 name = "name",
