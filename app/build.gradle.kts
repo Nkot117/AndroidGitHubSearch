@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
     kotlin("kapt")
 }
 
@@ -53,58 +53,54 @@ android {
 
 dependencies {
     
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.swiperefreshlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
     
     // Hilt
-    val hiltVersion = "2.48"
-    implementation("com.google.dagger:hilt-android:${hiltVersion}")
-    kapt("com.google.dagger:hilt-compiler:${hiltVersion}")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     
     // Retrofit
-    val retrofitVersion = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:${retrofitVersion}")
-    implementation("com.squareup.retrofit2:converter-moshi:${retrofitVersion}")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation(libs.retrofit)
+    implementation(libs.converter.moshi)
+    implementation(libs.logging.interceptor)
     
     // moshi
-    implementation("com.squareup.moshi:moshi:1.12.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
     
     // Room
-    val roomVersion = "2.6.1"
-    implementation("androidx.room:room-runtime:${roomVersion}")
-    annotationProcessor("androidx.room:room-compiler:${roomVersion}")
-    kapt("androidx.room:room-compiler:${roomVersion}")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     
     // Navigation
-    val navVersion = "2.7.7"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     
     // Coil
-    implementation("io.coil-kt:coil:1.4.0")
+    implementation(libs.coil)
 
     // CardView
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(libs.androidx.cardview)
 
     // Local unit tests
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("com.google.truth:truth:1.4.2")
-    testImplementation("org.robolectric:robolectric:4.12.1")
-    testImplementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
-    testImplementation("app.cash.turbine:turbine:1.1.0")
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
-    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.junit.ktx)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.mockk)
 }
